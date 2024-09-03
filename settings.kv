@@ -1,11 +1,93 @@
-<BoxLayout>:
-    orientation: 'vertical'
-    Label:
-        text:'Settings'
-        font_size:28
-    Label:
-        text: 'The PLayers'
-    Label:
-        text:'Ending Condition'
-    Button:
-        text:'Ready'
+<SettingsScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text:'Settings'
+            font_size:28
+        Label:
+            text: 'The PLayers'
+        BoxLayout:
+            BoxLayout:
+                CheckBox:
+                    group: 'players'
+                Label:
+                    text:'1 players'
+            BoxLayout:
+                CheckBox:
+                    group: 'players'
+                Label:
+                    text:'2 players'
+            BoxLayout:
+                CheckBox:
+                    group: 'players'
+                Label:
+                    text:'3 players'
+            BoxLayout:
+                CheckBox:
+                    group: 'players'
+                Label:
+                    text:'4 players'
+        Label:
+            text:'Player Name and Initial Money Setup'
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                Label:
+                    text:''
+                Label:
+                    text:'Name'
+                Label:
+                    text:'Initial Money'
+            BoxLayout:
+                Label:
+                    text:'Player 1'
+                TextInput:
+                    multiline: False
+                BoxLayout:
+                    Label:
+                        text:''
+                    Label:
+                        text:'$'
+                    TextInput:
+                        multiline: False
+            BoxLayout:
+                Label:
+                    text:'Player 2'
+                TextInput:
+                    multiline: False
+                BoxLayout:
+                    Label:
+                        text:''
+                    Label:
+                        text:'$'
+                    TextInput:
+                        multiline: False
+            BoxLayout:
+                Label:
+                    text:'Player 3'
+                TextInput:
+                    multiline: False
+                    hint_text: 'Enter Name'
+                BoxLayout:
+                    Label:
+                        text:''
+                    Label:
+                        text:'$'
+                    TextInput:
+                        multiline: False
+            BoxLayout:
+                Label:
+                    text:'Player 4'
+                TextInput:
+                    multiline: False
+                BoxLayout:
+                    Label:
+                        text:''
+                    Label:
+                        text:'$'
+                    TextInput:
+                        multiline: False
+        Label:
+            text:'Ending Condition'
+        Button:
+            text:'Ready'
