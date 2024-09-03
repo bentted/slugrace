@@ -5,7 +5,7 @@
             text:'Settings'
             font_size:28
         Label:
-            text: 'The PLayers'
+            text: 'The Players'
         BoxLayout:
             BoxLayout:
                 CheckBox:
@@ -87,7 +87,30 @@
                         text:'$'
                     TextInput:
                         multiline: False
-        Label:
-            text:'Ending Condition'
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text:'Ending Condition'
+            GridLayout:
+                rows:3
+                CheckBox:
+                    group: 'conditions'
+                BoxLayout:
+                    Label:
+                        text:'The game is over when there is only one player with any money left.'
+                CheckBox:
+                    group:'conditions'
+                BoxLayout:
+                    Label:
+                        text:'The game is over noy lster than after a given number of races.'
+                    TextInput:
+                        multiline: False
+                CheckBox:
+                    group: 'conditions'
+                BoxLayout:
+                    Label:
+                        text:'The game is over not later than the total racing time has elapsed.'
+                    TextInput:
+                        multiline: False
         Button:
             text:'Ready'
