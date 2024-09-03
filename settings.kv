@@ -32,60 +32,30 @@
         orientation: 'vertical'
         padding:10
         spacing:10
-        Label:
+        TitleLabel:
             text:'Settings'
             font_size:28
-            size_hint:(1, None)
-            height:30
-            text_size: self.size
-            halign: 'left'
-            valign: 'center'
-        Label:
+        TitleLabel:
             text: 'The Players'
-            font_size: 20
-            height: 30
-            text_size: self.size
-            halign: 'left'
-            valign: 'center'
         BoxLayout:
             size_hint:(.4, None)
             height: 50
             BoxLayout:
-                CheckBox:
-                    group: 'players'
-                    size_hint: (.5, 1)
-                Label:
+                PlayerRadioButton:
+                RegularLabel:
                     text:'1 players'
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
             BoxLayout:
-                CheckBox:
-                    group: 'players'
-                    size_hint: (.5, 1)
-                Label:
+                PlayerRadioButton:
+                RegularLabel:
                     text:'2 players'
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
             BoxLayout:
-                CheckBox:
-                    group: 'players'
-                    size_hint: (.5, 1)
-                Label:
+                PlayerRadioButton:
+                RegularLabel:
                     text:'3 players'
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
             BoxLayout:
-                CheckBox:
-                    group: 'players'
-                    size_hint: (.5, 1)
-                Label:
+                PlayerRadioButton:
+                RegularLabel:
                     text:'4 players'
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
         Label:
             text:'Player Name and Initial Money Setup'
             text_size: self.size
@@ -96,195 +66,88 @@
             padding: 10
             spacing: 10
             BoxLayout:
-                Label:
+                RegularLabel:
                     text:''
                     size_hint_x: None
                     width: 80
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
-                Label:
+                RegularLabel:
                     text:'Name'
                     size_hint_x: None
                     width: 700
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
-                Label:
+                RegularLabel:
                     text:'Initial Money'
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
             BoxLayout:
-                Label:
+                Regular80x30Label:
                     text:'Player 1'
-                    size_hint: (None, None)
-                    size: 80,30
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
-                TextInput:
-                    multiline: False
-                    size_hint:(None, None)
-                    size: 400, 30
+                NameInput:
                 BoxLayout:
-                    Label:
+                    RegularLabel:
                         text:''
                         size_hint_x:None
                         width: 280
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                    Label:
-                        text:'$'
-                        size_hint: (None, None)
-                        size: 20,30
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                    TextInput:
-                        multiline: False
-                        size_hint:(None, None)
-                        size: 250, 30
+                    DollarLabel:
+                    NumInput:
             BoxLayout:
-                Label:
+                Regular80x30Label:
                     text:'Player 2'
-                    size_hint: (None, None)
-                    size: 80,30
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
-                TextInput:
-                    multiline: False
-                    size_hint:(None, None)
-                    size: 400, 30
+                NameInput:
                 BoxLayout:
-                    Label:
+                    RegularLabel:
                         text:''
                         size_hint_x:None
                         width: 280
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                    Label:
-                        text:'$'
-                        size_hint: (None, None)
-                        size: 20,30
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                    TextInput:
+                    DollarLabel:
+                    NumInput:
                         multiline: False
                         size_hint:(None, None)
                         size: 250, 30
             BoxLayout:
-                Label:
+                Regular80x30Label:
                     text:'Player 3'
-                    size_hint: (None, None)
-                    size: 80,30
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
-                TextInput:
-                    multiline: False
-                    size_hint:(None, None)
-                    size: 400, 30
+                NameInput:
                 BoxLayout:
-                    Label:
+                    RegularLabel:
                         text:''
                         size_hint_x:None
                         width: 280
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                    Label:
-                        text:'$'
-                        size_hint: (None, None)
-                        size: 20,30
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                    TextInput:
-                        multiline: False
-                        size_hint:(None, None)
-                        size: 250, 30
+                    DollarLabel:
+                    NumInput:
             BoxLayout:
-                Label:
+                Regular80x30Label:
                     text:'Player 4'
-                    size_hint: (None, None)
-                    size: 80,30
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
-                TextInput:
-                    multiline: False
-                    size_hint:(None, None)
-                    size: 400, 30
+                NameInput:
                 BoxLayout:
-                    Label:
+                    RegularLabel:
                         text:''
                         size_hint_x:None
                         width: 280
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                    Label:
-                        text:'$'
-                        size_hint: (None, None)
-                        size: 20,30
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                    TextInput:
-                        multiline: False
-                        size_hint:(None, None)
-                        size: 250, 30
+                    DollarLabel:
+                    NumInput:
         BoxLayout:
             orientation: 'vertical'
             padding:10
             spacing:10
-            Label:
+            TitleLabel:
                 text:'Ending Condition'
-                font_size:20
-                size_hint:(1, None)
-                height: 30
-                text_size: self.size
-                halign: 'left'
-                valign: 'center'
             GridLayout:
                 rows:3
                 spacing:10
-                CheckBox:
-                    group: 'conditions'
-                    size_hint_x: .05
+                ConditionRadioButton:
                 BoxLayout:
-                    Label:
+                    RegularLabel:
                         text:'The game is over when there is only one player with any money left.'
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
-                CheckBox:
-                    group:'conditions'
-                    size_hint_x: .05
+                ConditionRadioButton:
                 BoxLayout:
-                    Label:
-                        text:'The game is over noy lster than after a given number of races.'
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
+                    RegularLabel:
+                        text:'The game is over not lster than after a given number of races.'
                     TextInput:
                         multiline: False
                         size_hint:(None, None)
                         size: 250, 30
-                CheckBox:
-                    group: 'conditions'
-                    size_hint_x: .05
+                ConditionRadioButton:
                 BoxLayout:
-                    Label:
+                    RegularLabel:
                         text:'The game is over not later than the total racing time has elapsed.'
-                        text_size: self.size
-                        halign: 'left'
-                        valign: 'center'
                     TextInput:
                         multiline: False
                         size_hint:(None, None)
