@@ -1,3 +1,32 @@
+<RegularLabel@Label>:
+    text_size: self.size
+    halign: 'left'
+    valign: 'center'
+<TitleLabel@RegularLabel>:
+    font_size: 20
+    size_hint: (1, None)
+    height: 30
+<Regular80x30Label@RegularLabel>:
+    size_hint:(None, None)
+    size: 80, 30
+<DollarLabel@RegularLabel>:
+    text: '$'
+    size_hint: (None,None)
+    size: 20,30
+<NameInput@TextInput>:
+    multiline: False
+    size_hint:(None,None)
+    size: 400,30
+<NumInput@TextInput>:
+    multiline: False
+    size_hint: (None,None)
+    size: 250, 30
+<PlayerRadioButton@CheckBox>:
+    group:'players'
+    size_hint: (.5, 1)
+<ConditionRadioButton@CheckBox>:
+    group: 'conditions'
+    size_hint_x: .05
 <SettingsScreen>:
     BoxLayout:
         orientation: 'vertical'
