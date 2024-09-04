@@ -1,0 +1,68 @@
+<RightButton@Button>:
+    font_size: 18
+    size_hint:(None, None)
+    size: 200, 40
+    pos_hint:{'right': 1}
+<RegularLabel@Label>:
+    text_size: self.size
+    halign: 'left'
+    valign: 'center'
+<TitleLabel@RegularLabel>:
+    font_size: 20
+    size_hint: (1, None)
+    height: 30
+<Regular80x30Label@RegularLabel>:
+    size_hint:(None, None)
+    size: 80, 30
+<DollarLabel@RegularLabel>:
+    text: '$'
+    size_hint: (None,None)
+    size: 20,30
+<NameInput@TextInput>:
+    multiline: False
+    size_hint:(None,None)
+    size: 400,30
+<NumInput@TextInput>:
+    multiline: False
+    size_hint: (None,None)
+    size: 250, 30
+<PlayerRadioButton@CheckBox>:
+    group:'players'
+    size_hint: (.5, 1)
+<ConditionRadioButton@CheckBox>:
+    group: 'conditions'
+    size_hint_x: .05
+<BoldLabel@RegularLabel>:
+    bold:True
+    halign:'center'
+<PlayerSlugButton@CheckBox>:
+    size_hint:(.5,1)
+<BetInput@NumInput>:
+    width:120
+    pos_hint:{'center_y':.5}
+<GameOverScreen>:
+    orientation: 'vertical'
+    BoldLabel:
+        font_size: 100
+        text:'Game Over'
+    BoldLabel:
+        font_size:40
+        text:"There's only one player with any money left."
+    BoldLabel:
+        font_size:30
+        text:'The winner is Player 2, having started with $1000, winning at $999'
+    BoxLayout:
+        spacing:50
+        pos_hint:{'center_x':.45,'center_y':.5}
+        size_hint:(None,None)
+        size: 450,200
+        Button:
+            text:'Play Again'
+            pos_hint:{'x':0,'center_y':.5}
+            size_hint:(None,None)
+            size: 200, 40
+        Button:
+            text:'Quit'
+            pos_hint:{'right': 1,'center_y': .5}
+            size_hint:(None,None)
+            size: 200, 40
