@@ -1,4 +1,4 @@
-from kivy.uix.actionbar import BoxLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.app import App
 from kivy.config import Config
 
