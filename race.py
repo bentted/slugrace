@@ -1,9 +1,11 @@
+
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-
+class RaceScreen(BoxLayout):
+    pass
 class RaceApp(App):
     def build(self):
-        return BoxLayout
+        return RaceScreen()
 
 if __name__=='__main__':
     RaceApp().run()
