@@ -1,4 +1,3 @@
-from kivymd.uix.behaviors.focus_behavior import App
 from kivy.config import Config 
 Config.set('graphics', 'width', '1200')
 Config.set('graphics', 'height', '675')
