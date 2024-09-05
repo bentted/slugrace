@@ -1,5 +1,13 @@
 
 ### CLASS RULES ###
+<RedButton@Button>:
+    background_color: .8, 0, 0, 1
+    color:1, .8, .1, 1
+    bold:True
+    font_size: 18
+    size_hint:(None,None)
+    size:200, 40
+    pos_hint:{'right': 1}
 <RegularLabel@Label>:
     color: .2, .1, 0, 1
     text_size: self.size
@@ -11,9 +19,9 @@
     canvas:
         Color:
             rgba: 1, 1, .8, 1
-            Rectangle:
-                pos:self.pos
-                size: self.size
+        Rectangle:
+            pos:self.pos
+            size: self.size
     orientation: 'vertical'
     padding: 10
     ### TITLE LABEL ###
@@ -149,8 +157,5 @@
             RegularLabel:
                 text: 'The odds were 1.85'
     ### NEXT RACE BUTTON ###
-    Button:
+    RedButton:
         text: 'Next Race'
-        size_hint: (None, None)
-        size: 200, 40
-        pos_hint: {'center_x': 0.5}

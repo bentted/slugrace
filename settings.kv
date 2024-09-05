@@ -34,21 +34,41 @@
 ### CHECK BOXES ###
 # PlayerRadioButton inherits from CheckBox.
 <PlayerRadioButton@CheckBox>:
+    canvas.before:
+        Color:
+            rgba:0,0,0,1
+        Ellipse:
+            pos:self.center_x-10, self.center_y-10
+            size:[20,20]
     group: 'players'
     size_hint: (.5, 1)
 
 # ConditionRadioButton inherits from CheckBox.
 <ConditionRadioButton@CheckBox>:
+    canvas.before:
+        Color:
+            rgba:0,0,0,1
+        Ellipse:
+            pos:self.center_x-10, self.center_y-10
+            size:[20,20]
     group: 'conditions'
     size_hint_x: .05
+<RedButton@Button>:
+    background_color: .8, 0, 0, 1
+    color:1, .8, .1, 1
+    bold:True
+    font_size: 18
+    size_hint:(None,None)
+    size:200, 40
+    pos_hint:{'center_x': 0.3}
 
 <SettingsScreen>:
     canvas:
         Color:
             rgba: 1, 1, .8, 1
-            Rectangle:
-                pos:self.pos
-                size:self.size
+        Rectangle:
+            pos:self.pos
+            size:self.size
     orientation: 'vertical'
     padding: 10
     spacing: 10
@@ -60,6 +80,12 @@
     ### THE PLAYERS ###
     BoxLayout:
         canvas:
+            Color:
+                rgba: 1, 1, 1, .4
+            Rectangle:
+                pos:self.pos
+                size:self.size
+                source: 'assets/all slugs.png'
             Color:
                 rgba:.2, .1, 0, 1
             Line:
@@ -234,8 +260,5 @@
                 NumInput:
 
     ### READY BUTTON ###
-    Button:
+    RedButton:
         text: 'Ready'
-        size_hint: (None, None)
-        size: 200, 40
-        pos_hint: {'center_x': 0.5}
