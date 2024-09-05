@@ -61,7 +61,43 @@
     size_hint:(None,None)
     size:200, 40
     pos_hint:{'center_x': 0.3}
-
+<PlayerCount>:
+    PlayerRadioButton:
+    RegularLabel:
+        text: root.count_text
+<PlayerSettings>:
+    Regular80x30Label:
+        text: root.label_text
+    NumInput:
+    BoxLayout:
+        RegularLabel:
+            text: ''
+            size_hint_x: None
+            width: 280
+        DollarLabel:
+        NumInput:
+<SlugsStats>:
+    spacing: 10
+    RegularLabel:
+        text: root.name
+    RegularLabel:
+        text:(str(root.wins)+('win' if root.wins == 1 else 'wins'))
+    RegularLabel:
+        text:str(root.win_percebt) + '%'
+<PlayerStats>:
+    RegularLabel:
+        text: root.name
+    RegularLabel:
+        text: 'has $' + str(root.money)
+<SlugInfo>:
+    orientation: 'vertical'
+    size_hint: (None,None)
+    size:100, 50
+    pos_hint: {'x':.004, 'center_y': root.y_position}
+    WhiteNameLabel:
+        text: root.name
+    WhiteWinsLabel:
+        text: str(root.wins) + ('win' if root.wins == 1 else 'wins')
 <SettingsScreen>:
     canvas:
         Color:
@@ -105,28 +141,22 @@
             height: 50
             # 1 player
             BoxLayout:
-                PlayerRadioButton:
-                RegularLabel:
-                    text: '1 player'
-
+                PlayerCount:
+                    count_text: '1 Player'
             # 2 players
             BoxLayout:
-                PlayerRadioButton:
-                RegularLabel:
-                    text: '2 players'
+                PlayerCount:
+                    count_text: '2 Player'
 
             # 3 players
             BoxLayout:
-                PlayerRadioButton:
-                RegularLabel:
-                    text: '3 players'
+                PlayerCount:
+                    count_text: '3 Player'
 
             # 4 players
             BoxLayout:
-                PlayerRadioButton:
-                RegularLabel:
-                    text: '4 players'
-
+                PlayerCount:
+                    count_text: '4 Player'
         # Player Name and Initial Money Setup
         BoxLayout:
             orientation: 'vertical'
@@ -150,70 +180,19 @@
 
             # the players rows
             # player 1
-            BoxLayout:
-                Regular80x30Label:
-                    text: 'Player'
-                NameInput:
-
-                BoxLayout:
-                    RegularLabel:
-                        text: ""
-                        size_hint_x: None
-                        width: 280
-                    DollarLabel:
-
-                    NumInput:
-
+            PlayerSettings:
+                label_text: 'Player 1'
             # player 2
-            BoxLayout:
-                Regular80x30Label:
-                    text: 'Player 2'
-
-                NameInput:
-
-                BoxLayout:
-                    RegularLabel:
-                        text: ""
-                        size_hint_x: None
-                        width: 280
-
-                    DollarLabel:
-
-                    NumInput:
+            PlayerSettings:
+                label_text: 'Player 2'
 
             # player 3
-            BoxLayout:
-                Regular80x30Label:
-                    text: 'Player 3'
-
-                NameInput:
-
-                BoxLayout:
-                    RegularLabel:
-                        text: ""
-                        size_hint_x: None
-                        width: 280
-
-                    DollarLabel:
-
-                    NumInput:
+            PlayerSettings:
+                label_text: 'Player 3'
 
             # player 4
-            BoxLayout:
-                Regular80x30Label:
-                    text: 'Player 4'
-
-                NameInput:
-
-                BoxLayout:
-                    RegularLabel:
-                        text: ""
-                        size_hint_x: None
-                        width: 280
-
-                    DollarLabel:
-
-                    NumInput:
+            PlayerSettings:
+                label_text: 'Player 4'
 
     ### ENDING CONDITIONS ### padding: 10
     BoxLayout:
