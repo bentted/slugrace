@@ -3,6 +3,7 @@
 
 ### LABELS ###
 <RegularLabel@Label>:
+    color: .2, .1, 0, 1
     text_size: self.size
     halign: 'left'
     valign: 'center'
@@ -42,6 +43,12 @@
     size_hint_x: .05
 
 <SettingsScreen>:
+    canvas:
+        Color:
+            rgba: 1, 1, .8, 1
+            Rectangle:
+                pos:self.pos
+                size:self.size
     orientation: 'vertical'
     padding: 10
     spacing: 10
@@ -53,6 +60,8 @@
     ### THE PLAYERS ###
     BoxLayout:
         canvas:
+            Color:
+                rgba:.2, .1, 0, 1
             Line:
                 rounded_rectangle: self.x, self.y, self.width, self.height, 10
                 width: 2
@@ -180,9 +189,11 @@
 
                     NumInput:
 
-    ### ENDING CONDITIONS ###
+    ### ENDING CONDITIONS ### padding: 10
     BoxLayout:
         canvas:
+            Color:
+                rgba: .2, .1, 0,1
             Line:
                 rounded_rectangle: self.x, self.y, self.width, self.height, 10
                 width: 2

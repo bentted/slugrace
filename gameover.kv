@@ -4,6 +4,7 @@
     size: 200, 40
     pos_hint:{'right': 1}
 <RegularLabel@Label>:
+    color: .2, .1, 0, 1
     text_size: self.size
     halign: 'left'
     valign: 'center'
@@ -41,6 +42,12 @@
     width:120
     pos_hint:{'center_y':.5}
 <GameOverScreen>:
+    canvas:
+        Color:
+            rgba:1, 1, .8, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
     orientation: 'vertical'
     BoldLabel:
         font_size: 100

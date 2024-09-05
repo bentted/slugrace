@@ -1,12 +1,19 @@
 
 ### CLASS RULES ###
 <RegularLabel@Label>:
+    color: .2, .1, 0, 1
     text_size: self.size
     halign: 'left'
     valign: 'center'
 <BoldLabel@RegularLabel>:
     bold: True
 <ResultsScreen>:
+    canvas:
+        Color:
+            rgba: 1, 1, .8, 1
+            Rectangle:
+                pos:self.pos
+                size: self.size
     orientation: 'vertical'
     padding: 10
     ### TITLE LABEL ###
