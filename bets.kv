@@ -1,6 +1,7 @@
 #:kivy 1.11.1
 # File name: bets.kv
 #:import bets bets
+
 <Bet>:
     spacing: 10
     RegularLabel:
@@ -51,6 +52,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
+    game: root.manager.parent.parent.parent.manager
 
     BoxLayout:
         orientation: 'vertical'
@@ -98,7 +100,6 @@
         ### GO BUTTON ###
         RedButton:
             text: 'Go'
-
-            # When the button is pressed, this screen should
-            # switch to the Results screen.
-            on_press: root.manager.current = 'resultsscreen'
+            on_press:
+                root.manager.current = 'resultsscreen'
+                root.manager.transition.direction = 'left'

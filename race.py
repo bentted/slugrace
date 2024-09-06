@@ -1,8 +1,7 @@
 # File name: race.py
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.properties import NumericProperty, StringProperty
+from kivy.uix.accordion import NumericProperty, StringProperty
 from kivy.lang import Builder
 
 # Besides Screen we have to import ScreenManager.
@@ -30,11 +29,6 @@ class SlugInfo(BoxLayout):
     y_position = NumericProperty(0)
     name = StringProperty('')
     wins = NumericProperty(0)
-
-class SlugImage(RelativeLayout):
-    body_image = StringProperty('')
-    eye_image = StringProperty('')
-    y_position = NumericProperty(0)
 
 class RaceScreen(Screen):
     pass

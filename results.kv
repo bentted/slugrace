@@ -40,6 +40,7 @@
         Rectangle:
             pos: self.pos
             size: self.size
+    game: root.manager.parent.parent.parent.manager
 
     BoxLayout:
         orientation: 'vertical'
@@ -102,7 +103,6 @@
         ### NEXT RACE BUTTON ###
         RedButton:
             text: 'Next Race'
-
-            # When the button is pressed, this screen
-            # should switch to the Bets screen.
-            on_press: root.manager.current = 'betsscreen'
+            on_press:
+                root.manager.current = 'betsscreen'
+                root.manager.transition.direction = 'right'

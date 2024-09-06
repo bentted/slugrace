@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import StringProperty
+from kivy.uix.accordion import StringProperty
 from kivy.uix.screenmanager import Screen
 
 

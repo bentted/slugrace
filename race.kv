@@ -2,7 +2,6 @@
 # File name: race.kv
 #:import race race
 
-# Here's the implementation of the screen manager.
 <RaceScreenManager>:
     BetsScreen:
         name: 'betsscreen'
@@ -43,6 +42,10 @@
 
     # the body image
     Image:
+        # The source will be set to the concatenated string only if the body_image is
+        # not an empty string. Otherwise it will be set to None. In Python an empty
+        # string is understood as the boolean value False, hence the simplified syntax
+        # inside the condition in the ternary if statement.
         source: 'atlas://assets/slugs/slugs/' + root.body_image if root.body_image else None
 
     # the left eye image
@@ -56,7 +59,10 @@
         canvas.after:
             PopMatrix
 
+        # The source will be set to the concatenated string only if the body_image is
+        # not an empty string. Otherwise it will be set to None.
         source: 'atlas://assets/slugs/slugs/' + root.eye_image if root.eye_image else None
+
         pos_hint: {'x': .95, 'y': .45}
         size_hint: 0.25, 0.25
 
@@ -71,7 +77,10 @@
         canvas.after:
             PopMatrix
 
+        # The source will be set to the concatenated string only if the body_image is
+        # not an empty string. Otherwise it will be set to None.
         source: 'atlas://assets/slugs/slugs/' + root.eye_image if root.eye_image else None
+
         pos_hint: {'x': .95, 'y': .3}
         size_hint: 0.25, 0.25
 
@@ -82,6 +91,11 @@
         Rectangle:
             pos: self.pos
             size: self.size
+    game: root.manager
+    speedster: _speedster
+    trusty: _trusty
+    iffy: _iffy
+    slowpoke: _slowpoke
 
     BoxLayout:
         orientation: 'vertical'
@@ -287,24 +301,28 @@
                 # slug images
                 # Speedster
                 SlugImage:
+                    id: _speedster
                     body_image: 'speedsterBody'
                     eye_image: 'speedsterEye'
                     y_position: .875
 
                 # Trusty
                 SlugImage:
+                    id:_trusty
                     body_image: 'trustyBody'
                     eye_image: 'trustyEye'
                     y_position: .625
 
                 # Iffy
                 SlugImage:
+                    id: _iffy
                     body_image: 'iffyBody'
                     eye_image: 'iffyEye'
                     y_position: .375
 
                 # Slowpoke
                 SlugImage:
+                    id: _slowpoke
                     body_image: 'slowpokeBody'
                     eye_image: 'slowpokeEye'
                     y_position: .125
@@ -332,10 +350,6 @@
                     source: 'atlas://assets/silhouettes/silhouettes/Trusty'
 
         ### THE BETS ###
-        # Let's enclose the RaceScreenManager inside a BoxLayout. Let's move
-        # the canvas instructions from the Label to the BoxLayout.
-        # Let's also add 5 pixels of padding so that the rounded rectangle
-        # is not partially covered by the screen loaded by the screen manager.
         BoxLayout:
             canvas:
                 Color:
@@ -346,8 +360,5 @@
 
             padding: 5
 
-            # Here's the screen manager. We could set its current property
-            # to 'betsscreen', but this would be redundant as the manager
-            # uses the first screen by default.
             RaceScreenManager:
                 # current: 'betsscreen'
