@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import NumericProperty, StringProperty
+from kivy.uix.accordion import NumericProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 class Result(BoxLayout):
     player_name = StringProperty('')

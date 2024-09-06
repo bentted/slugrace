@@ -35,7 +35,7 @@
     WhiteWinsLabel:
         text: str(root.wins) + (' win' if root.wins == 1 else ' wins')
 
-<SlugImage>:
+<Slug>:
     pos_hint: {'x': .09, 'center_y': root.y_position}
     size_hint: None, None
     size: 143, 30
@@ -300,28 +300,28 @@
 
                 # slug images
                 # Speedster
-                SlugImage:
+                Slug:
                     id: _speedster
                     body_image: 'speedsterBody'
                     eye_image: 'speedsterEye'
                     y_position: .875
 
                 # Trusty
-                SlugImage:
+                Slug:
                     id:_trusty
                     body_image: 'trustyBody'
                     eye_image: 'trustyEye'
                     y_position: .625
 
                 # Iffy
-                SlugImage:
+                Slug:
                     id: _iffy
                     body_image: 'iffyBody'
                     eye_image: 'iffyEye'
                     y_position: .375
 
                 # Slowpoke
-                SlugImage:
+                Slug:
                     id: _slowpoke
                     body_image: 'slowpokeBody'
                     eye_image: 'slowpokeEye'
