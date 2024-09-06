@@ -1,3 +1,4 @@
+
 from kivy.config import Config
 Config.set('graphics', 'width', '1200')
 Config.set('graphics', 'height', '675') 
@@ -7,6 +8,9 @@ Config.set('graphics', 'resizable', '0')
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty
+from kivy.lang import Builder
+from kivy.uix.screenmanager import Screen
+Builder.load_file('widgets.kv')
 
 class PlayerCount(BoxLayout):
     count_text = StringProperty('')
@@ -14,7 +18,7 @@ class PlayerCount(BoxLayout):
 class PlayerSettings(BoxLayout):
     label_text = StringProperty('')
 
-class SettingsScreen(BoxLayout):
+class SettingsScreen(Screen):
     pass
 
 class SettingsApp(App):

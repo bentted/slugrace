@@ -1,4 +1,4 @@
-#:kivy 1.11.1
+#: import settings settings
 # File name: settings.kv
 
 ### LABELS ###
@@ -105,139 +105,140 @@
         Rectangle:
             pos:self.pos
             size:self.size
-    orientation: 'vertical'
-    padding: 10
-    spacing: 10
-    ### SETTINGS LABEL ###
-    TitleLabel:
-        text: 'Settings'
-        font_size: 28
-
-    ### THE PLAYERS ###
     BoxLayout:
-        canvas:
-            Color:
-                rgba: 1, 1, 1, .4
-            Rectangle:
-                pos:self.pos
-                size:self.size
-                source: 'assets/all slugs.png'
-            Color:
-                rgba:.2, .1, 0, 1
-            Line:
-                rounded_rectangle: self.x, self.y, self.width, self.height, 10
-                width: 2
-
         orientation: 'vertical'
         padding: 10
         spacing: 10
-        # Title
+        ### SETTINGS LABEL ###
         TitleLabel:
-            text: 'The Players'
+            text: 'Settings'
+            font_size: 28
 
-        # Radio Buttons
+        ### THE PLAYERS ###
         BoxLayout:
-            size_hint: (.4, None)
-            height: 50
-            # 1 player
-            BoxLayout:
-                PlayerCount:
-                    count_text: '1 Player'
-            # 2 players
-            BoxLayout:
-                PlayerCount:
-                    count_text: '2 Player'
+            canvas:
+                Color:
+                    rgba: 1, 1, 1, .4
+                Rectangle:
+                    pos:self.pos
+                    size:self.size
+                    source: 'assets/all slugs.png'
+                Color:
+                    rgba:.2, .1, 0, 1
+                Line:
+                    rounded_rectangle: self.x, self.y, self.width, self.height, 10
+                    width: 2
 
-            # 3 players
-            BoxLayout:
-                PlayerCount:
-                    count_text: '3 Player'
-
-            # 4 players
-            BoxLayout:
-                PlayerCount:
-                    count_text: '4 Player'
-        # Player Name and Initial Money Setup
-        BoxLayout:
             orientation: 'vertical'
+            padding: 10
+            spacing: 10
+            # Title
+            TitleLabel:
+                text: 'The Players'
 
-            # the headers row
+            # Radio Buttons
             BoxLayout:
-                RegularLabel:
-                    text: ""
-                    size_hint_x: None
-                    width: 80
+                size_hint: (.4, None)
+                height: 50
+                # 1 player
+                BoxLayout:
+                    PlayerCount:
+                        count_text: '1 Player'
+                # 2 players
+                BoxLayout:
+                    PlayerCount:
+                        count_text: '2 Player'
 
-                # name header
-                RegularLabel:
-                    text: "Name"
-                    size_hint_x: None
-                    width: 700
+                # 3 players
+                BoxLayout:
+                    PlayerCount:
+                        count_text: '3 Player'
 
-                # money header
-                RegularLabel:
-                    text: "Initial Money"
+                # 4 players
+                BoxLayout:
+                    PlayerCount:
+                        count_text: '4 Player'
+            # Player Name and Initial Money Setup
+            BoxLayout:
+                orientation: 'vertical'
 
-            # the players rows
-            # player 1
-            PlayerSettings:
-                label_text: 'Player 1'
-            # player 2
-            PlayerSettings:
-                label_text: 'Player 2'
+                # the headers row
+                BoxLayout:
+                    RegularLabel:
+                        text: ""
+                        size_hint_x: None
+                        width: 80
 
-            # player 3
-            PlayerSettings:
-                label_text: 'Player 3'
+                    # name header
+                    RegularLabel:
+                        text: "Name"
+                        size_hint_x: None
+                        width: 700
 
-            # player 4
-            PlayerSettings:
-                label_text: 'Player 4'
+                    # money header
+                    RegularLabel:
+                        text: "Initial Money"
 
-    ### ENDING CONDITIONS ### padding: 10
-    BoxLayout:
-        canvas:
-            Color:
-                rgba: .2, .1, 0,1
-            Line:
-                rounded_rectangle: self.x, self.y, self.width, self.height, 10
-                width: 2
+                # the players rows
+                # player 1
+                PlayerSettings:
+                    label_text: 'Player 1'
+                # player 2
+                PlayerSettings:
+                    label_text: 'Player 2'
 
-        orientation: 'vertical'
-        size_hint: (1, .4)
-        padding: 10
-        spacing: 10
+                # player 3
+                PlayerSettings:
+                    label_text: 'Player 3'
 
-        # title label
-        TitleLabel:
-            text: "Ending Conditions"
+                # player 4
+                PlayerSettings:
+                    label_text: 'Player 4'
 
-        # radio buttons
-        GridLayout:
-            rows: 3
+        ### ENDING CONDITIONS ### padding: 10
+        BoxLayout:
+            canvas:
+                Color:
+                    rgba: .2, .1, 0,1
+                Line:
+                    rounded_rectangle: self.x, self.y, self.width, self.height, 10
+                    width: 2
+
+            orientation: 'vertical'
+            size_hint: (1, .4)
+            padding: 10
             spacing: 10
 
-            # option 1: money
-            ConditionRadioButton:
-            RegularLabel:
-                text: "The game is over when there is only one player with any money left."
+            # title label
+            TitleLabel:
+                text: "Ending Conditions"
 
-            # option 2: races
-            ConditionRadioButton:
-            BoxLayout:
+            # radio buttons
+            GridLayout:
+                rows: 3
+                spacing: 10
+
+                # option 1: money
+                ConditionRadioButton:
                 RegularLabel:
-                    text: "The game is over not later than after a given number of races."
+                    text: "The game is over when there is only one player with any money left."
 
-                NumInput:
+                # option 2: races
+                ConditionRadioButton:
+                BoxLayout:
+                    RegularLabel:
+                        text: "The game is over not later than after a given number of races."
 
-            # option 3: time
-            ConditionRadioButton:
-            BoxLayout:
-                RegularLabel:
-                    text: "The game is over not later than the total racing time has elapsed."
+                    NumInput:
 
-                NumInput:
+                # option 3: time
+                ConditionRadioButton:
+                BoxLayout:
+                    RegularLabel:
+                        text: "The game is over not later than the total racing time has elapsed."
 
-    ### READY BUTTON ###
-    RedButton:
-        text: 'Ready'
+                    NumInput:
+
+        ### READY BUTTON ###
+        RedButton:
+            text: 'Ready'

@@ -7,7 +7,9 @@ Config.set('graphics', 'resizable', '0')
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, StringProperty
-
+from kivy.lang import Builder
+Builder.load_file('widgets.kv')
+from kivy.uix.screenmanager import Screen
 class Result(BoxLayout):
     player_name = StringProperty('')
     money_before = NumericProperty(0)
@@ -18,7 +20,7 @@ class Result(BoxLayout):
     current_money = NumericProperty(0)
     odds = NumericProperty(0)
 
-class ResultsScreen(BoxLayout):
+class ResultsScreen(Screen):
     pass
 
 class ResultsApp(App):

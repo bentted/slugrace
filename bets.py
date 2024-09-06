@@ -9,6 +9,9 @@ Config.set('graphics', 'resizable', '0')
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, StringProperty
+from kivy.lang import Builder
+from kivy.uix.screenmanager import Screen
+Builder.load_file('widgets.kv')
 
 class Bet(BoxLayout):
     player_name = StringProperty('')
@@ -16,7 +19,7 @@ class Bet(BoxLayout):
     max_bet_amount = NumericProperty(0)
     player_group = StringProperty('')
 
-class BetsScreen(BoxLayout):
+class BetsScreen(Screen):
     pass
 
 class BetsApp(App):
