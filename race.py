@@ -1,11 +1,4 @@
 # File name: race.py
-from kivy.config import Config
-Config.set('graphics', 'width', '1200')
-Config.set('graphics', 'height', '675') 
-Config.set('graphics', 'resizable', '0')
-
-import kivy
-kivy.require('1.11.1')
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
@@ -15,7 +8,6 @@ from kivy.lang import Builder
 # Besides Screen we have to import ScreenManager.
 from kivy.uix.screenmanager import Screen, ScreenManager
 
-Builder.load_file('widgets.kv')
 
 # Load the Bets and Results kv files.
 Builder.load_file('bets.kv')
@@ -51,5 +43,3 @@ class RaceApp(App):
     def build(self):
         return RaceScreen()
 
-if __name__ == '__main__':
-    RaceApp().run()

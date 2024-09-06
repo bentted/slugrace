@@ -9,7 +9,7 @@ from kivy.lang import Builder
 Builder.load_file('settings.kv')
 Builder.load_file('race.kv')
 Builder.load_file('gameover.kv')
-
+Builder.load_file('widgets.kv')
 class SlugraceScreenManager(ScreenManager):
     pass
 

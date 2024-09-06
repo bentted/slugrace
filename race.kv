@@ -43,7 +43,7 @@
 
     # the body image
     Image:
-        source: 'atlas://assets/slugs/slugs/' + root.body_image
+        source: 'atlas://assets/slugs/slugs/' + root.body_image if root.body_image else None
 
     # the left eye image
     Image:
@@ -56,7 +56,7 @@
         canvas.after:
             PopMatrix
 
-        source: 'atlas://assets/slugs/slugs/' + root.eye_image
+        source: 'atlas://assets/slugs/slugs/' + root.eye_image if root.eye_image else None
         pos_hint: {'x': .95, 'y': .45}
         size_hint: 0.25, 0.25
 
@@ -71,7 +71,7 @@
         canvas.after:
             PopMatrix
 
-        source: 'atlas://assets/slugs/slugs/' + root.eye_image
+        source: 'atlas://assets/slugs/slugs/' + root.eye_image if root.eye_image else None
         pos_hint: {'x': .95, 'y': .3}
         size_hint: 0.25, 0.25
 
