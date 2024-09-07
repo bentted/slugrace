@@ -254,6 +254,7 @@
                         text: "The game is over not later than after a given number of races."
 
                     NumInput:
+                        id:_number_of_races
 
                 # option 3: time
                 ConditionRadioButton:
@@ -264,10 +265,13 @@
                         text: "The game is over not later than the total racing time has elapsed."
 
                     NumInput:
+                        id: _time_set
 
         ### READY BUTTON ###
         RedButton:
             text: 'Ready'
             on_press:
                 root.set_players(root.players)
+                root.set_slugs()
+                root.set_game(_number_of_races.text, _time_set.text)
                 root.manager.current= 'racescreen'

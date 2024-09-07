@@ -2,7 +2,8 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.accordion import StringProperty
 from kivy.uix.screenmanager import Screen
-
+from random import randint
+from datetime import timedelta
 
 class PlayerCount(BoxLayout):
     count_text = StringProperty('')
@@ -20,6 +21,33 @@ class SettingsScreen(Screen):
                                     else max(app.initial_money_min,
                                              min(int(players[i].player_initial_money),app.initial_money_max)))
             player.money = player.initial_money
+    def set_slugs(self):
+        self.game.speedster.wins = 0
+        self.game.speedster.win_percent = 0.00
+        self.game.speedster.odds = round(1.33 + randint(0, 10) / 100, 2)
+        
+        self.game.trusty.wins = 0
+        self.game.trusty.win_percent = 0.00
+        self.game.trusty.odds = round(1.33 + randint(0, 10) / 100, 2)
+        
+        self.game.iffy.wins = 0
+        self.game.iffy.win_percent = 0.00
+        self.game.iffy.odds = round(1.33 + randint(0, 10) / 100, 2)
+
+        self.game.slowpoke.wins = 0
+        self.game.slowpoke.win_percent = 0.00
+        self.game.slowpoke.odds = round(1.33 + randint(0, 10) / 100, 2)
+    def set_game(self, number_of_races, time_set):
+        if number_of_races !='':
+            self.game.number_of_races = int(number_of_races)
+            self.game.races_to_go = self.game.number_of_races
+        if time_set != '':
+            self.game.time_set_delta = timedelta(minutes = int(time_set))
+            self.game.time_set = str(self.game.time_set_delta)
+            self.game.time_elapsed = str(self.game.time_elapsed_delta)
+            self.game.time_remaining_delta = self.game.time_set_delta
+            self.game.time_remaining = str(self.game.time_remaining_delta)
+
 
 class SettingsApp(App):
     def build(self):
