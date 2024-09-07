@@ -62,13 +62,20 @@
     size:200, 40
     pos_hint:{'center_x': 0.3}
 <PlayerCount>:
+    active: _player_radio_button.active
     PlayerRadioButton:
+        id:_player_radio_button
+        active: root.active
     RegularLabel:
         text: root.count_text
 <PlayerSettings>:
+    name:_player_name.text
+    player_initial_money: _player_initial_money.text
     Regular80x30Label:
         text: root.label_text
     NumInput:
+        id:_player_name
+        hint_text:"Enter the name of" +root.label_text
     BoxLayout:
         RegularLabel:
             text: ''
@@ -76,6 +83,8 @@
             width: 280
         DollarLabel:
         NumInput:
+            id:_player_initial_money
+            hint_text:'1000'
 <SlugsStats>:
     spacing: 10
     RegularLabel:
@@ -106,6 +115,7 @@
             pos:self.pos
             size:self.size
     game: root.manager
+    players:[_player1, _player2, _player3, _player4]
     BoxLayout:
         orientation: 'vertical'
         padding: 10
@@ -145,20 +155,25 @@
                 BoxLayout:
                     PlayerCount:
                         count_text: '1 Player'
+                        on_active: root.game.number_of_players = 1
                 # 2 players
                 BoxLayout:
                     PlayerCount:
                         count_text: '2 Player'
+                        active: True
+                        on_active: root.game.number_of_players = 2
 
                 # 3 players
                 BoxLayout:
                     PlayerCount:
                         count_text: '3 Player'
+                        on_active: root.game.number_of_players = 3
 
                 # 4 players
                 BoxLayout:
                     PlayerCount:
                         count_text: '4 Player'
+                        on_active: root.game.number_of_players = 4
             # Player Name and Initial Money Setup
             BoxLayout:
                 orientation: 'vertical'
@@ -183,17 +198,21 @@
                 # the players rows
                 # player 1
                 PlayerSettings:
+                    id:_player1
                     label_text: 'Player 1'
                 # player 2
                 PlayerSettings:
+                    id:_player2
                     label_text: 'Player 2'
 
                 # player 3
                 PlayerSettings:
+                    id:_player3
                     label_text: 'Player 3'
 
                 # player 4
                 PlayerSettings:
+                    id:_player4
                     label_text: 'Player 4'
 
         ### ENDING CONDITIONS ### padding: 10
@@ -221,11 +240,15 @@
 
                 # option 1: money
                 ConditionRadioButton:
+                    active: root.game.end_by_money
+                    on_active: if self.active: root.game.set_ending_condition('money')
                 RegularLabel:
                     text: "The game is over when there is only one player with any money left."
 
                 # option 2: races
                 ConditionRadioButton:
+                    active: root.game.end_by_races
+                    on_active: if self.active: root.game.set_ending_condition('races')
                 BoxLayout:
                     RegularLabel:
                         text: "The game is over not later than after a given number of races."
@@ -234,6 +257,8 @@
 
                 # option 3: time
                 ConditionRadioButton:
+                    active: root.game.end_by_time
+                    on_active: if self.active: root.game.set_ending_condition('time')
                 BoxLayout:
                     RegularLabel:
                         text: "The game is over not later than the total racing time has elapsed."
@@ -243,4 +268,6 @@
         ### READY BUTTON ###
         RedButton:
             text: 'Ready'
-            on_press: root.manager.current= 'racescreen'
+            on_press:
+                root.set_players(root.players)
+                root.manager.current= 'racescreen'

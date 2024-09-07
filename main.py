@@ -1,3 +1,4 @@
+from kivy.uix.accordion import NumericProperty,BooleanProperty
 # File name: main.py
 
 from kivy.config import Config
@@ -24,8 +25,38 @@ class Game(ScreenManager):
     player2 = Player()
     player3 = Player()
     player4 = Player()
-
+    number_of_players = NumericProperty(2)
+    players =[player1,player2]
+    end_by_money = BooleanProperty(True)
+    end_by_races = BooleanProperty(False)
+    end_by_time = BooleanProperty(False)
+    def on_number_of_players(self, instance, value):
+        if self.number_of_players == 1:
+            self.players =[self.player1]
+        elif self.number_of_players == 2:
+            self.players =[self.player1, self.player2]
+        elif self.number_of_players == 3:
+            self.players =[self.player1, self.player2, self.player3]
+        elif self.number_of_players == 4:
+            self.players =[self.player1, self.player2, self.player3, self.player4]
+    def set_ending_condition(self, condition):
+        if condition == 'money':
+            self.end_by_money = True
+            self.end_by_races = False
+            self.end_by_time =False
+        elif condition == 'races':
+            self.end_by_money = False
+            self.end_by_races = True
+            self.end_by_time =False
+        elif condition == 'time':
+            self.end_by_money = False
+            self.end_by_races = False
+            self.end_by_time = True
+        
 class SlugraceApp(App):
+    initial_money_min = 10
+    initial_money_max = 5000
+    max_name_length =10
     def build(self):
         return Game()
 
