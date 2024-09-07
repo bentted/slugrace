@@ -47,6 +47,10 @@ class SettingsScreen(Screen):
             self.game.time_elapsed = str(self.game.time_elapsed_delta)
             self.game.time_remaining_delta = self.game.time_set_delta
             self.game.time_remaining = str(self.game.time_remaining_delta)
+    def defocus(self, *widgets):
+        for widget in widgets:
+            widget.focus = False
+                
 
 
 class SettingsApp(App):

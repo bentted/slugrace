@@ -13,7 +13,7 @@ from kivy.lang import Builder
 from player import Player
 
 # We'll need the StringProperty class for the time properties.
-from kivy.uix.accordion import NumericProperty, BooleanProperty, StringProperty
+from kivy.uix.accordion import NumericProperty, BooleanProperty, StringProperty, ObjectProperty
 
 # We’ll need this to calculate durations.
 from datetime import timedelta
@@ -48,6 +48,8 @@ class Game(ScreenManager):
 
     # how many races are left until the game is over
     races_to_go = NumericProperty(0)
+
+    race_winner = ObjectProperty(None)
 
     # time
     # after how much time the game should end
@@ -88,7 +90,8 @@ class Game(ScreenManager):
             self.end_by_races = False
             self.end_by_time = True
 
-        print(self.end_by_money, self.end_by_races, self.end_by_time)
+    def start_game(self):
+        print("place holder")
 
 class SlugraceApp(App):
     # General Settings

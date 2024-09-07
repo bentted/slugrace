@@ -1,5 +1,5 @@
 from kivy.uix.behaviors.codenavigation import EventDispatcher
-from kivy.uix.accordion import StringProperty, NumericProperty
+from kivy.uix.accordion import StringProperty, NumericProperty, ObjectProperty
 
 class Player(EventDispatcher):
     name= StringProperty('')
@@ -8,3 +8,4 @@ class Player(EventDispatcher):
     money_before_race = NumericProperty(0)
     money_won = NumericProperty(0)
     bet = NumericProperty(1)
+    chosen_slug = ObjectProperty(None)

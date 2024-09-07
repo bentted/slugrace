@@ -82,18 +82,21 @@
                     RegularLabel:
                         text: '1'
                 BoxLayout:
+                    opacity: int(not root.game.end_by_money)
                     RegularLabel:
                         size_hint: (2.5, 1)
                         text: 'Number of races set:' if root.game.end_by_races else 'Time set:'
                     RegularLabel:
                         text: str(root.game.number_of_races) if root.game.end_by_races else root.game.time_set
                 BoxLayout:
+                    opacity: int(not root.game.end_by_money)
                     RegularLabel:
                         size_hint: (2.5, 1)
                         text: 'Races finished:'if root.game.end_by_races else 'Time elapsed:'
                     RegularLabel:
                         text: str(root.game.races_finished)if root.game.end_by_races else root.game.time_elapsed
                 BoxLayout:
+                    opacity: int(not root.game.end_by_money)
                     RegularLabel:
                         size_hint: (2.5, 1)
                         text: 'Races to go:'if root.game.end_by_races else 'Time remaining:'
@@ -159,14 +162,17 @@
                 PlayerStats:
                     name: root.game.player2.name
                     money: root.game.player2.money
+                    opacity: int(root.game.number_of_players >= 2)
 
                 PlayerStats:
                     name: root.game.player3.name
                     money: root.game.player3.money
+                    opacity: int(root.game.number_of_players >= 3)
 
                 PlayerStats:
                     name: root.game.player4.name
                     money: root.game.player4.money
+                    opacity: int(root.game.number_of_players >= 4)
 
             # Buttons
             BoxLayout:

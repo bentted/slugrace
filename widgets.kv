@@ -1,6 +1,6 @@
 #:kivy 1.11.1
 # File name: widgets.kv
-
+#:import widgets widgets
 ### LABELS ###
 <RegularLabel@Label>:
     color: .2, .1, 0, 1
@@ -57,6 +57,7 @@
     multiline: False
     size_hint: None, None
     size: 250, 30
+    input_filter: 'int'
 
 <BetInput@NumInput>:
     width: 120
@@ -94,3 +95,9 @@
             size:[20,20]
 
     size_hint: (.5, 1)
+    allow_no_selection: False
+<NameInput@TextInput>:
+    multiline: False
+    size_hint:(None,None)
+    size:400, 30
+        
