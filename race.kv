@@ -80,7 +80,7 @@
                         size_hint: (2.5, 1)
                         text: 'Race No'
                     RegularLabel:
-                        text: '1'
+                        text: str(root.game.race_number)
                 BoxLayout:
                     opacity: int(not root.game.end_by_money)
                     RegularLabel:
@@ -241,52 +241,60 @@
                 # the odds labels
                 # Speedster
                 WhiteOddsLabel:
-                    text: str(_speedster.odds)
+                    text: '{:.sf}'.format(_speedster.odds)
                     pos_hint: {'x': .77, 'center_y': _speedster.y_position}
 
                 # Trusty
                 WhiteOddsLabel:
-                    text: str(_trusty.odds)
+                    text: '{:.sf}'.format(_trusty.odds)
                     pos_hint: {'x': .77, 'center_y': _trusty.y_position}
 
                 # Iffy
                 WhiteOddsLabel:
-                    text: str(_iffy.odds)
+                    text: '{:.sf}'.format(_iffy.odds)
                     pos_hint: {'x': .77, 'center_y': _iffy.y_position}
 
                 # Slowpoke
                 WhiteOddsLabel:
-                    text: str(_slowpoke.odds)
+                    text: '{:.sf}'.format(_slowpoke.odds)
                     pos_hint: {'x': .77, 'center_y': _slowpoke.y_position}
 
                 # the slugs
                 # Speedster
                 Slug:
                     id: _speedster
+                    name: 'speedster'
                     body_image: 'speedsterBody'
                     eye_image: 'speedsterEye'
                     y_position: .875
+                    front_image: 'atlas://assets/silhouettes/silhouettes/speedster'
 
                 # Trusty
                 Slug:
                     id: _trusty
+                    name:'trusty'
                     body_image: 'trustyBody'
                     eye_image: 'trustyEye'
                     y_position: .625
+                    front_image: 'atlas://assets/silhouettes/silhouettes/trusty'
 
                 # Iffy
                 Slug:
                     id: _iffy
+                    name: 'iffy'
                     body_image: 'iffyBody'
                     eye_image: 'iffyEye'
                     y_position: .375
+                    front_image: 'atlas://assets/silhouettes/silhouettes/iffy'
 
                 # Slowpoke
                 Slug:
                     id: _slowpoke
+                    name:'slowpoke'
                     body_image: 'slowpokeBody'
                     eye_image: 'slowpokeEye'
                     y_position: .125
+                    front_image: 'atlas://assets/silhouettes/silhouettes/slowpoke'
 
             # Winner
             BoxLayout:
@@ -295,20 +303,22 @@
 
                 Label:
                     color: .2, .1, 0, 1
-                    text: "The winner is"
+                    text: '' if not root.game.race_winner else "The winner is"
                     font_size: 24
                     size_hint: 1, .2
                     bold: True
 
                 Label:
                     color: .2, .1, 0, 1
-                    text: "Trusty"
+                    text: '' if not root.game.race_winner else root.game.race_Winner.name
+                    font_size: 24
                     font_size: 32
                     size_hint: 1, .2
                     bold: True
 
                 Image:
-                    source: 'atlas://assets/silhouettes/silhouettes/Trusty'
+                    opacity: 1 if root.game.race_winner else 0
+                    source: ' 'if not root.game.race_winner else root.game.race_winner.front_image
 
         ### THE BETS ###
         BoxLayout:

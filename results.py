@@ -10,7 +10,7 @@ class Result(BoxLayout):
     result_info = StringProperty('')
     gain_or_loss = NumericProperty(0)
     current_money = NumericProperty(0)
-    odds = NumericProperty(0)
+    odds = StringProperty('')
 
 class ResultsScreen(Screen):
     pass

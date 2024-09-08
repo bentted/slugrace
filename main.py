@@ -1,3 +1,4 @@
+
 # File name: main.py
 
 from kivy.config import Config
@@ -11,12 +12,14 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
 from player import Player
+from random import choice
 
 # We'll need the StringProperty class for the time properties.
 from kivy.uix.accordion import NumericProperty, BooleanProperty, StringProperty, ObjectProperty
 
 # We’ll need this to calculate durations.
 from datetime import timedelta
+
 
 Builder.load_file('settings.kv')
 Builder.load_file('race.kv')
@@ -48,6 +51,7 @@ class Game(ScreenManager):
 
     # how many races are left until the game is over
     races_to_go = NumericProperty(0)
+    race_number = NumericProperty(0)
 
     race_winner = ObjectProperty(None)
 
@@ -89,9 +93,19 @@ class Game(ScreenManager):
             self.end_by_money = False
             self.end_by_races = False
             self.end_by_time = True
-
     def start_game(self):
-        print("place holder")
+        print('start game')
+    def go(self):
+        self.race_winner = choice(self.slugs)
+        for player in self.players:
+            player.update(self.race_winner)
+        for slug in self.slugs:
+            slug.update(self.race_winner, self.race_number)
+    def reset_race(self):
+        self.race_number += 1
+        for player in self.players:
+            player.chosen_slug = None
+            player.bet=1
 
 class SlugraceApp(App):
     # General Settings
