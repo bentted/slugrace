@@ -18,11 +18,13 @@
         text: str(root.win_percent) + '%'
 
 <PlayerStats>:
+    text_color:[1, 0, 0, 1] if root.money == 0 else [.2, .1, 0, 1]
     RegularLabel:
         text: root.name
+        color: root.text_color
     RegularLabel:
         text: 'has $' + str(root.money)
-
+        color: root.text_color
 <SlugInfo>:
     orientation: 'vertical'
     size_hint: None, None
@@ -81,6 +83,7 @@
                         text: 'Race No'
                     RegularLabel:
                         text: str(root.game.race_number)
+
                 BoxLayout:
                     opacity: int(not root.game.end_by_money)
                     RegularLabel:
@@ -92,16 +95,16 @@
                     opacity: int(not root.game.end_by_money)
                     RegularLabel:
                         size_hint: (2.5, 1)
-                        text: 'Races finished:'if root.game.end_by_races else 'Time elapsed:'
+                        text: 'Races finished:' if root.game.end_by_races else 'Time elapsed:'
                     RegularLabel:
-                        text: str(root.game.races_finished)if root.game.end_by_races else root.game.time_elapsed
+                        text: str(root.game.races_finished) if root.game.end_by_races else root.game.time_elapsed
                 BoxLayout:
                     opacity: int(not root.game.end_by_money)
                     RegularLabel:
                         size_hint: (2.5, 1)
-                        text: 'Races to go:'if root.game.end_by_races else 'Time remaining:'
+                        text: 'Races to go:' if root.game.end_by_races else 'Time remaining:'
                     RegularLabel:
-                        text: str(root.game.races_to_go)if root.game.end_by_races else root.game.time_remaining
+                        text: str(root.game.races_to_go) if root.game.end_by_races else root.game.time_remaining
 
             # Slugs' Stats
             BoxLayout:
@@ -154,8 +157,6 @@
                     text: "Players' Stats"
 
                 PlayerStats:
-                    # We use the root.game property
-                    # to access the Game class.
                     name: root.game.player1.name
                     money: root.game.player1.money
 
@@ -172,7 +173,7 @@
                 PlayerStats:
                     name: root.game.player4.name
                     money: root.game.player4.money
-                    opacity: int(root.game.number_of_players >= 4)
+                    opacity: int(root.game.number_of_players == 4)
 
             # Buttons
             BoxLayout:
@@ -241,60 +242,60 @@
                 # the odds labels
                 # Speedster
                 WhiteOddsLabel:
-                    text: '{:.sf}'.format(_speedster.odds)
+                    text: '{:.2f}'.format(_speedster.odds)
                     pos_hint: {'x': .77, 'center_y': _speedster.y_position}
 
                 # Trusty
                 WhiteOddsLabel:
-                    text: '{:.sf}'.format(_trusty.odds)
+                    text: '{:.2f}'.format(_trusty.odds)
                     pos_hint: {'x': .77, 'center_y': _trusty.y_position}
 
                 # Iffy
                 WhiteOddsLabel:
-                    text: '{:.sf}'.format(_iffy.odds)
+                    text: '{:.2f}'.format(_iffy.odds)
                     pos_hint: {'x': .77, 'center_y': _iffy.y_position}
 
                 # Slowpoke
                 WhiteOddsLabel:
-                    text: '{:.sf}'.format(_slowpoke.odds)
+                    text: '{:.2f}'.format(_slowpoke.odds)
                     pos_hint: {'x': .77, 'center_y': _slowpoke.y_position}
 
                 # the slugs
                 # Speedster
                 Slug:
                     id: _speedster
-                    name: 'speedster'
+                    name: 'Speedster'
                     body_image: 'speedsterBody'
                     eye_image: 'speedsterEye'
                     y_position: .875
-                    front_image: 'atlas://assets/silhouettes/silhouettes/speedster'
+                    front_image: 'atlas://assets/silhouettes/silhouettes/Speedster'
 
                 # Trusty
                 Slug:
                     id: _trusty
-                    name:'trusty'
+                    name: 'Trusty'
                     body_image: 'trustyBody'
                     eye_image: 'trustyEye'
                     y_position: .625
-                    front_image: 'atlas://assets/silhouettes/silhouettes/trusty'
+                    front_image: 'atlas://assets/silhouettes/silhouettes/Trusty'
 
                 # Iffy
                 Slug:
                     id: _iffy
-                    name: 'iffy'
+                    name: 'Iffy'
                     body_image: 'iffyBody'
                     eye_image: 'iffyEye'
                     y_position: .375
-                    front_image: 'atlas://assets/silhouettes/silhouettes/iffy'
+                    front_image: 'atlas://assets/silhouettes/silhouettes/Iffy'
 
                 # Slowpoke
                 Slug:
                     id: _slowpoke
-                    name:'slowpoke'
+                    name: 'Slowpoke'
                     body_image: 'slowpokeBody'
                     eye_image: 'slowpokeEye'
                     y_position: .125
-                    front_image: 'atlas://assets/silhouettes/silhouettes/slowpoke'
+                    front_image: 'atlas://assets/silhouettes/silhouettes/Slowpoke'
 
             # Winner
             BoxLayout:
@@ -310,15 +311,14 @@
 
                 Label:
                     color: .2, .1, 0, 1
-                    text: '' if not root.game.race_winner else root.game.race_Winner.name
-                    font_size: 24
+                    text: '' if not root.game.race_winner else root.game.race_winner.name
                     font_size: 32
                     size_hint: 1, .2
                     bold: True
 
                 Image:
                     opacity: 1 if root.game.race_winner else 0
-                    source: ' 'if not root.game.race_winner else root.game.race_winner.front_image
+                    source: '' if not root.game.race_winner else root.game.race_winner.front_image
 
         ### THE BETS ###
         BoxLayout:

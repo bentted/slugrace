@@ -20,11 +20,11 @@
             halign: 'center'
         BoldLabel:
             font_size: 40
-            text: "There's only one player with any money left."
+            text: root.game.game_over_reason
             halign: 'center'
         BoldLabel:
             font_size: 30
-            text: "The winner is Player 2, having started at $1000, winning at $999"
+            text: root.game.winner_text
             halign: 'center'
         BoxLayout:
             spacing: 50

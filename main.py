@@ -1,9 +1,8 @@
-
 # File name: main.py
 
 from kivy.config import Config
 Config.set('graphics', 'width', '1200')
-Config.set('graphics', 'height', '675')
+Config.set('graphics', 'height', '675') 
 Config.set('graphics', 'resizable', '0')
 
 import kivy
@@ -12,14 +11,10 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
 from player import Player
-from random import choice
-
-# We'll need the StringProperty class for the time properties.
-from kivy.uix.accordion import NumericProperty, BooleanProperty, StringProperty, ObjectProperty
-
-# We’ll need this to calculate durations.
+from kivy.uix.accordion import (NumericProperty, BooleanProperty, 
+                             StringProperty,  ObjectProperty)
 from datetime import timedelta
-
+from random import choice
 
 Builder.load_file('settings.kv')
 Builder.load_file('race.kv')
@@ -28,46 +23,29 @@ Builder.load_file('widgets.kv')
 Builder.load_file('slug.kv')
 
 class Game(ScreenManager):
-    # the players
     player1 = Player()
     player2 = Player()
     player3 = Player()
     player4 = Player()
-
     number_of_players = NumericProperty(2)
     players = [player1, player2]
-
-    # ending conditions.
     end_by_money = BooleanProperty(True)
     end_by_races = BooleanProperty(False)
     end_by_time = BooleanProperty(False)
-
-    # races
-    # after how many races the game should end
     number_of_races = NumericProperty(0)
-
-    # how many races are already finished
     races_finished = NumericProperty(0)
-
-    # how many races are left until the game is over
     races_to_go = NumericProperty(0)
-    race_number = NumericProperty(0)
-
-    race_winner = ObjectProperty(None)
-
-    # time
-    # after how much time the game should end
+    race_number = NumericProperty(1)
+    race_winner = ObjectProperty(None, allownone=True)
     time_set_delta = timedelta()  # duration
     time_set = StringProperty('') # string representation of duration
-
-    # how much time has already elapsed since the beginning of the game
-    time_elapsed_delta = timedelta()   # duration
-    time_elapsed = StringProperty('')  # string representation of duration
-
-    # how much time is still left to the end of the game
-    time_remaining_delta = timedelta()   # duration
-    time_remaining = StringProperty('')  # string representation of duration
-
+    time_elapsed_delta = timedelta()  
+    time_elapsed = StringProperty('')  
+    time_remaining_delta = timedelta()   
+    time_remaining = StringProperty('')  
+    winners = []
+    game_over_reason = StringProperty('')
+    winner_text = StringProperty('')
     # callback methods
     def on_number_of_players(self, instance, value):
         if self.number_of_players == 1:
@@ -79,12 +57,11 @@ class Game(ScreenManager):
         elif self.number_of_players == 4:
             self.players = [self.player1, self.player2, self.player3, self.player4]
 
-    # This method will actually set the ending condition.
     def set_ending_condition(self, condition):
         if condition == 'money':
             self.end_by_money = True
             self.end_by_races = False
-            self.end_by_time = False
+            self.end_by_time = False            
         elif condition == 'races':
             self.end_by_money = False
             self.end_by_races = True
@@ -93,19 +70,48 @@ class Game(ScreenManager):
             self.end_by_money = False
             self.end_by_races = False
             self.end_by_time = True
+
     def start_game(self):
-        print('start game')
+        print('Game started')
+
     def go(self):
         self.race_winner = choice(self.slugs)
+
         for player in self.players:
-            player.update(self.race_winner)
+            player.update(self.race_winner)   
+
         for slug in self.slugs:
             slug.update(self.race_winner, self.race_number)
+
+        self.remove_bankrupt_players()
+        self.gameover_check()
+    def remove_bankrupt_players(self):
+        self.players = [player for player in self.players if not player.bankrupt]
+    def gameover_check(self):
+        self.winners = []
+        if len(self.players) == 1:
+            self.winners.append(self.players[0])
+            self.game_over_reason = "Theres only one player with any money left"
+            winner = self.winners[0]
+            self.winner_text = (f'The winner is{winner.name},'+
+                                f'having started at${winner.initial_money},'+
+                                f'winning ${winner.money}.')
+            self.current ='gameoverscreen'
+        elif len(self.players)== 0:
+            self.game_over_reason ='All players are brankrupt.'
+            self.winner_text = 'There is no winner!'
+            self.current = 'gameoverscreen'
+
+
     def reset_race(self):
         self.race_number += 1
+        self.races_finished +=1
+        self.races_to_go -= 1
+
         for player in self.players:
-            player.chosen_slug = None
-            player.bet=1
+            player.reset()
+
+        self.race_winner = None   
 
 class SlugraceApp(App):
     # General Settings
