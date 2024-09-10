@@ -1,7 +1,9 @@
-from kivy.app import App
+# File name: results.py
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.accordion import NumericProperty, StringProperty
 from kivy.uix.screenmanager import Screen
+
 class Result(BoxLayout):
     player_name = StringProperty('')
     money_before = NumericProperty(0)
@@ -14,8 +16,4 @@ class Result(BoxLayout):
 
 class ResultsScreen(Screen):
     pass
-
-class ResultsApp(App):
-    def build(self):
-        return ResultsScreen()
 

@@ -33,7 +33,6 @@
         RegularLabel:
             text: '$' + str(root.current_money)
     RegularLabel:
-        # Now odds is a StringProperty, so there’s no need to cast.
         text: 'The odds were ' + root.odds
 
 <ResultsScreen>:
@@ -45,27 +44,33 @@
             size: self.size
 
     game: root.manager.parent.parent.parent.manager
+
+    # Here's the FloatLayout with four BankruptLabels.
     FloatLayout:
         BankruptLabel:
             text: root.game.player1.name + self.bankrupt_text
             pos: _result1.pos
-            size:_result1.size
-            opacity:int(root.game.player1.bankrupt)
+            size: _result1.size
+            opacity: int(root.game.player1.bankrupt)
+
         BankruptLabel:
             text: root.game.player2.name + self.bankrupt_text
             pos: _result2.pos
-            size:_result2.size
-            opacity:int(root.game.player2.bankrupt)
+            size: _result2.size
+            opacity: int(root.game.player2.bankrupt)
+
         BankruptLabel:
             text: root.game.player3.name + self.bankrupt_text
             pos: _result3.pos
-            size:_result3.size
-            opacity:int(root.game.player3.bankrupt)
+            size: _result3.size
+            opacity: int(root.game.player3.bankrupt)
+
         BankruptLabel:
             text: root.game.player4.name + self.bankrupt_text
             pos: _result4.pos
-            size:_result4.size
-            opacity:int(root.game.player4.bankrupt)
+            size: _result4.size
+            opacity: int(root.game.player4.bankrupt)
+
     BoxLayout:
         orientation: 'vertical'
         padding: 10
@@ -92,9 +97,10 @@
                 current_money: root.game.player1.money
                 odds: '{:.2f}'.format(root.game.player1.chosen_slug.odds) if root.game.player1.chosen_slug else '1.00'
                 disabled: root.game.player1.bankrupt
+
             # player 2
             Result:
-                id:_result2
+                id: _result2
                 player_name: root.game.player2.name
                 money_before: root.game.player2.money_before_race
                 bet_amount: root.game.player2.bet
@@ -107,7 +113,7 @@
 
             # player 3
             Result:
-                id:_result3
+                id: _result3
                 player_name: root.game.player3.name
                 money_before: root.game.player3.money_before_race
                 bet_amount: root.game.player3.bet
@@ -116,11 +122,11 @@
                 gain_or_loss: abs(root.game.player3.money_won)
                 current_money: root.game.player3.money
                 odds: '{:.2f}'.format(root.game.player3.chosen_slug.odds) if root.game.player3.chosen_slug else '1.00'
-                disabled: root.game.number_of_players < 3 or root.game.player2.bankrupt
+                disabled: root.game.number_of_players < 3 or root.game.player3.bankrupt
 
             # player 4
             Result:
-                id:_result4
+                id: _result4
                 player_name: root.game.player4.name
                 money_before: root.game.player4.money_before_race
                 bet_amount: root.game.player4.bet
@@ -134,10 +140,8 @@
         ### NEXT RACE BUTTON ###
         RedButton:
             text: 'Next Race'
+            disabled: root.game.game_is_over
             on_press:
-                # Let's call the method that will, among other things,
-                # increment the race number.
                 root.game.reset_race()
-
                 root.manager.current = 'betsscreen'
                 root.manager.transition.direction = 'right'

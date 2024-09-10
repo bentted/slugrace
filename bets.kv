@@ -174,7 +174,7 @@
         ### GO BUTTON ###
         RedButton:
             text: 'Go'
-            disabled: not root.all_slugs_selected
+            disabled: not root.all_slugs_selected or root.game.game_is_over
             on_press:
                 root.manager.current = 'resultsscreen'
                 root.manager.transition.direction = 'left'

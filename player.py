@@ -18,6 +18,8 @@ class Player(EventDispatcher):
         self.money += self.money_won
         if self.money == 0:
             self.bankrupt = True
-    def reset(self):
+    def reset(self, gameover=False):
         self.chosen_slug = None
         self.bet = 1
+        if gameover:
+            self.bankrupt = False

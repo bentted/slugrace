@@ -29,6 +29,7 @@
         NumInput:
             id: _player_initial_money
             hint_text: '1000'
+
             min_value: app.initial_money_min
             max_value: app.initial_money_max
 
@@ -115,13 +116,13 @@
 
                     # name header
                     RegularLabel:
-                        text: "Name(max. 10 characters)"
+                        text: "Name (max. 10 characters)"
                         size_hint_x: None
                         width: 700
 
                     # money header
                     RegularLabel:
-                        text: "Initial Money($10-$5000)"
+                        text: "Initial Money ($10 - $5000)"
 
                 # the players rows
                 # player 1
@@ -184,9 +185,7 @@
 
                 # option 2: races
                 ConditionRadioButton:
-                    # We'll need to reference the button, hence the id.
                     id: _racesButton
-
                     active: root.game.end_by_races
                     on_active: if self.active: root.game.set_ending_condition('races')
 
@@ -197,15 +196,13 @@
                         id: _number_of_races
                         disabled: not root.game.end_by_races
                         opacity: int(not self.disabled)
-                        hint_text:"Set number of races(1-100)"
+                        hint_text: "Set number of races (1-100)"
                         min_value: 1
-                        max_value:100
+                        max_value: 100
 
                 # option 3: time
                 ConditionRadioButton:
-                    # We'll need to reference the button, hence the id.
                     id: _timeButton
-
                     active: root.game.end_by_time
                     on_active: if self.active: root.game.set_ending_condition('time')
 
@@ -216,21 +213,20 @@
                         id: _time_set
                         disabled: not root.game.end_by_time
                         opacity: int(not self.disabled)
-                        hint_text:"Set max. game time (1-120 min)"
+                        hint_text: "Set max. game time (1-120 min)"
                         min_value: 1
                         max_value: 120
 
         ### READY BUTTON ###
         RedButton:
             text: 'Ready'
-
-            # Here are the situations when the button should be disabled.
             disabled: ((_racesButton.active and _number_of_races.text == '') or (_timeButton.active and _time_set.text == '') or (_moneyButton.active and _moneyButton.disabled))
-
             on_press:
                 root.set_players(root.players)
                 root.set_slugs()
                 root.defocus(_number_of_races, _time_set)
                 root.set_game(_number_of_races.text, _time_set.text)
                 root.manager.current = 'racescreen'
+
+                # The game should start now.
                 root.game.start_game()

@@ -18,13 +18,14 @@
         text: str(root.win_percent) + '%'
 
 <PlayerStats>:
-    text_color:[1, 0, 0, 1] if root.money == 0 else [.2, .1, 0, 1]
+    text_color: [1, 0, 0, 1] if root.money == 0 else [.2, .1, 0, 1]
     RegularLabel:
         text: root.name
         color: root.text_color
     RegularLabel:
         text: 'has $' + str(root.money)
         color: root.text_color
+
 <SlugInfo>:
     orientation: 'vertical'
     size_hint: None, None
@@ -184,7 +185,7 @@
                 RedButton:
                     text: 'End Game'
                     pos_hint: {'right': 1}
-                    on_press: root.manager.current = 'gameoverscreen'
+                    on_press: root.game.gameover(manual=True)
 
                 RedButton:
                     text: 'Instructions'
@@ -269,6 +270,7 @@
                     eye_image: 'speedsterEye'
                     y_position: .875
                     front_image: 'atlas://assets/silhouettes/silhouettes/Speedster'
+                    speeds: [1, 6]
 
                 # Trusty
                 Slug:
@@ -278,6 +280,7 @@
                     eye_image: 'trustyEye'
                     y_position: .625
                     front_image: 'atlas://assets/silhouettes/silhouettes/Trusty'
+                    speeds: [2, 8]
 
                 # Iffy
                 Slug:
@@ -287,6 +290,7 @@
                     eye_image: 'iffyEye'
                     y_position: .375
                     front_image: 'atlas://assets/silhouettes/silhouettes/Iffy'
+                    speeds:[4, 6]
 
                 # Slowpoke
                 Slug:
@@ -296,6 +300,7 @@
                     eye_image: 'slowpokeEye'
                     y_position: .125
                     front_image: 'atlas://assets/silhouettes/silhouettes/Slowpoke'
+                    speeds: [4, 9]
 
             # Winner
             BoxLayout:
