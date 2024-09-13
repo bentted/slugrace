@@ -1,16 +1,14 @@
-#:import race race
-#: import slug slug
+#:kivy 1.11.1
+# File name: slug.kv
+#:import slug slug
+
 <Slug>:
-    pos_hint: {'x': .09, 'center_y': root.y_position}
+    pos_hint: {'x': self.start_position, 'center_y': root.y_position}
     size_hint: None, None
     size: 143, 30
 
     # the body image
     Image:
-        # The source will be set to the concatenated string only if the body_image is
-        # not an empty string. Otherwise it will be set to None. In Python an empty
-        # string is understood as the boolean value False, hence the simplified syntax
-        # inside the condition in the ternary if statement.
         source: 'atlas://assets/slugs/slugs/' + root.body_image if root.body_image else None
 
     # the left eye image
@@ -18,16 +16,13 @@
         canvas.before:
             PushMatrix
             Rotate:
-                angle: 30
+                angle: root.rot_angle
                 axis: 0, 0, 1
                 origin: self.x, self.center_y
         canvas.after:
             PopMatrix
 
-        # The source will be set to the concatenated string only if the body_image is
-        # not an empty string. Otherwise it will be set to None.
         source: 'atlas://assets/slugs/slugs/' + root.eye_image if root.eye_image else None
-
         pos_hint: {'x': .95, 'y': .45}
         size_hint: 0.25, 0.25
 
@@ -36,15 +31,12 @@
         canvas.before:
             PushMatrix
             Rotate:
-                angle: -30
+                angle: -root.rot_angle
                 axis: 0, 0, 1
                 origin: self.x, self.center_y
         canvas.after:
             PopMatrix
 
-        # The source will be set to the concatenated string only if the body_image is
-        # not an empty string. Otherwise it will be set to None.
         source: 'atlas://assets/slugs/slugs/' + root.eye_image if root.eye_image else None
-
         pos_hint: {'x': .95, 'y': .3}
         size_hint: 0.25, 0.25

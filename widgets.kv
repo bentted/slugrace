@@ -1,6 +1,7 @@
 #:kivy 1.11.1
 # File name: widgets.kv
 #:import widgets widgets
+
 ### LABELS ###
 <RegularLabel@Label>:
     color: .2, .1, 0, 1
@@ -36,11 +37,17 @@
 <WhiteWinsLabel@BoldLabel>:
     font_size: 14
     color: 1, 1, 1, 1
+
+# This is the label that will be displayed in the Bets and Results
+# screen when a player is bankrupt. The text will be in red.
 <BankruptLabel@RegularLabel>:
-    bankrupt_text: 'is bankrupt'
+    # Here's a property where we store the part of the text
+    # that is supposed to follow a player's name.
+    bankrupt_text:' is bankrupt.'
     size_hint: None, None
-    color: 1,0,0,1
-    ### BUTTONS ###
+    color: 1, 0, 0, 1
+
+### BUTTONS ###
 <RedButton@Button>:
     background_color: .8, 0, 0, 1
     color: 1, .8, .1, 1
@@ -51,16 +58,16 @@
     pos_hint: {'center_x': 0.5}
 
 ### TEXTINPUTS ###
-<NameInput@TextInput>:
+<NameInput>:
     multiline: False
     size_hint: None, None
     size: 400, 30
 
-<NumInput@TextInput>:
+<NumInput>:
     multiline: False
     size_hint: None, None
     size: 250, 30
-    input_filter: 'int'
+    input_filter: 'int'  # only digits accepted
 
 <BetInput@NumInput>:
     width: 120
@@ -99,8 +106,3 @@
 
     size_hint: (.5, 1)
     allow_no_selection: False
-<NameInput@TextInput>:
-    multiline: False
-    size_hint:(None,None)
-    size:400, 30
-        

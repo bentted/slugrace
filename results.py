@@ -16,4 +16,3 @@ class Result(BoxLayout):
 
 class ResultsScreen(Screen):
     pass
-

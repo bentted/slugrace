@@ -73,8 +73,10 @@
 
     game: root.manager.parent.parent.parent.manager
     bets: [_bet1, _bet2, _bet3, _bet4]
+    main_layer: _main_layer
+    race_label: _race_label
 
-    # Here's the FloatLayout with four BankruptLabels.
+    # bankrupt labels
     FloatLayout:
         BankruptLabel:
             text: root.game.player1.name + self.bankrupt_text
@@ -100,7 +102,22 @@
             size: _bet4.size
             opacity: int(root.game.player4.bankrupt)
 
+    # race label layer
+    FloatLayout:
+        BoldLabel:
+            id: _race_label
+            text: 'RACE STARTED'
+            font_size: 70
+            pos: root.pos
+            size: root.size
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+            opacity: int(root.main_layer.disabled)
+
+    # main layer
     BoxLayout:
+        id: _main_layer
         orientation: 'vertical'
         padding: 10
         spacing: 10
@@ -122,8 +139,6 @@
                 bet_amount: root.game.player1.bet
                 max_bet_amount: root.game.player1.money
                 player_group: 'player1'
-
-                # This bet will be disabled if Player 1 goes bankrupt.
                 disabled: root.game.player1.bankrupt
 
                 on_bet_amount: self.update_player_bet(root.game.player1)
@@ -136,8 +151,6 @@
                 bet_amount: root.game.player2.bet
                 max_bet_amount: root.game.player2.money
                 player_group: 'player2'
-
-                # also disabled if Player 2 goes bankrupt
                 disabled: root.game.number_of_players < 2 or root.game.player2.bankrupt
 
                 on_bet_amount: self.update_player_bet(root.game.player2)
@@ -150,8 +163,6 @@
                 bet_amount: root.game.player3.bet
                 max_bet_amount: root.game.player3.money
                 player_group: 'player3'
-
-                # also disabled if Player 3 goes bankrupt
                 disabled: root.game.number_of_players < 3 or root.game.player3.bankrupt
 
                 on_bet_amount: self.update_player_bet(root.game.player3)
@@ -164,8 +175,6 @@
                 bet_amount: root.game.player4.bet
                 max_bet_amount: root.game.player4.money
                 player_group: 'player4'
-
-                # also disabled if Player 4 goes bankrupt
                 disabled: root.game.number_of_players < 4 or root.game.player4.bankrupt
 
                 on_bet_amount: self.update_player_bet(root.game.player4)
@@ -175,8 +184,12 @@
         RedButton:
             text: 'Go'
             disabled: not root.all_slugs_selected or root.game.game_is_over
+
             on_press:
-                root.manager.current = 'resultsscreen'
-                root.manager.transition.direction = 'left'
-                root.game.go() # start race
-                root.clear_bets()
+                root.game.go(root.parent)
+                root.main_layer.disabled = True
+
+                # Let's call the method that will
+                # create and start the race label
+                # animation.
+                root.animate_race_label()

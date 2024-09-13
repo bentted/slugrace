@@ -11,7 +11,7 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
 from player import Player
-from kivy.uix.accordion import (NumericProperty, BooleanProperty,
+from kivy.properties import (NumericProperty, BooleanProperty,
                              StringProperty,  ObjectProperty)
 from datetime import timedelta
 from random import choice
@@ -50,6 +50,10 @@ class Game(ScreenManager):
     races_to_go = NumericProperty(0)
     race_number = NumericProperty(1)
     race_winner = ObjectProperty(None, allownone=True)
+
+    # The finish line is at the x position 850 from the left
+    # of the racetrack image.
+    finish_line = 850
 
     # time
     time_set_delta = timedelta()  # duration
@@ -111,19 +115,41 @@ class Game(ScreenManager):
 
             self.gameover()
 
-    def go(self):
+    def go(self, screen_manager):
         for slug in self.slugs:
-            slug.run()
-        self.race_winner = choice(self.slugs)
+            anim = slug.run()
+            anim.bind(on_progress=self.while_running)
+            anim.bind(on_complete=self.finish_race)
+            anim.start(slug)
 
-        for player in self.players:
-            player.update(self.race_winner)
+        self.race_manager = screen_manager
 
-        for slug in self.slugs:
-            slug.update(self.race_winner, self.race_number)
+    def while_running(self, animation, slug, progression):
+        if slug.right > self.finish_line:
+            if not self.race_winner:
+                self.race_winner = slug
 
-        self.remove_bankrupt_players()
-        self.gameover_check()
+                for player in self.players:
+                    player.update(self.race_winner)
+
+                for slug in self.slugs:
+                    slug.update(self.race_winner, self.race_number)
+
+                self.remove_bankrupt_players()
+                self.gameover_check()
+
+    def finish_race(self, animation, slug):
+        # This slug just finished the race.
+        slug.finished = True
+
+        # If all slugs finished the race,
+        # let's switch to the Results screen.
+        if (self.speedster.finished
+            and self.trusty.finished
+            and self.iffy.finished
+            and self.slowpoke.finished):
+            self.race_manager.current = 'resultsscreen'
+            self.race_manager.transition.direction = 'left'
 
     def remove_bankrupt_players(self):
         self.players = [player for player in self.players if not player.bankrupt]
@@ -211,13 +237,14 @@ class Game(ScreenManager):
         self.race_number += 1
         self.races_finished += 1
         self.races_to_go -= 1
-        for slug in self.slugs:
-            slug.reset()
 
         for player in self.players:
             player.reset()
 
         self.race_winner = None
+
+        for slug in self.slugs:
+            slug.reset()
 
     def reset_players(self):
         for player in self.potential_players:
@@ -247,10 +274,7 @@ class SlugraceApp(App):
         self.root.add_widget(Game())
         return self.root
 
-    # Here's the quit method that will display a popup window and then either quit the
-    # game or just dismiss the popup window.
     def quit(self):
-        # Set the properties of the popup in the constructor.
         confirm_popup = Popup(title='Confirmation Required',
                               title_color=[1, 0, 0, 1],
                               size_hint=(None, None),

@@ -140,7 +140,10 @@
         ### NEXT RACE BUTTON ###
         RedButton:
             text: 'Next Race'
+
+            # The button is disabled when the game is over.
             disabled: root.game.game_is_over
+
             on_press:
                 root.game.reset_race()
                 root.manager.current = 'betsscreen'

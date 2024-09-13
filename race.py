@@ -1,6 +1,7 @@
+# File name: race.py
 
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.accordion import NumericProperty, StringProperty
+from kivy.properties import NumericProperty, StringProperty
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen, ScreenManager
 
@@ -26,4 +27,3 @@ class SlugInfo(BoxLayout):
 
 class RaceScreen(Screen):
     pass
-

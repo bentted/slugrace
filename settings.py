@@ -1,7 +1,7 @@
 # File name: settings.py
 
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.accordion import StringProperty
+from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen
 from random import randint
 from datetime import timedelta
