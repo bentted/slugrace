@@ -40,10 +40,12 @@
                 on_press:
                     # We first reset the players and then restart the app.
                     root.game.reset_players()
+                    root.game.gameover_sound.unload()
                     app.restart()
             RedButton:
                 text: 'Quit'
                 pos_hint: {'right': 1, 'center_y': .5}
-
                 # Let's call the quit method in the SlugraceApp class.
-                on_press: app.quit()
+                on_press:
+                    root.game.gameover_sound.unload()
+                    app.quit()

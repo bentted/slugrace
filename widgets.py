@@ -1,8 +1,10 @@
+
 # File name: widgets.py
 
 from kivy.uix.textinput import TextInput
 from kivy.app import App
-from kivy.properties import NumericProperty
+from kivy.uix.accordion import NumericProperty, StringProperty
+from kivy.uix.togglebutton import ToggleButton
 
 class NameInput(TextInput):
     def __init__(self, **kwargs):
@@ -45,3 +47,5 @@ class NumInput(TextInput):
         else:
             if self.text == '':
                 self.cursor_width = 1.01
+class SoundButton(ToggleButton):
+    image_source = StringProperty('') # '' symbolizes an empty string

@@ -6,9 +6,11 @@
     pos_hint: {'x': self.start_position, 'center_y': root.y_position}
     size_hint: None, None
     size: 143, 30
+    body: _body
 
     # the body image
     Image:
+        id: _body
         source: 'atlas://assets/slugs/slugs/' + root.body_image if root.body_image else None
 
     # the left eye image

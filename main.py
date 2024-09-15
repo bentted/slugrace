@@ -11,23 +11,24 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
 from player import Player
-from kivy.properties import (NumericProperty, BooleanProperty,
+from kivy.uix.accordion import (NumericProperty, BooleanProperty,
                              StringProperty,  ObjectProperty)
 from datetime import timedelta
-from random import choice
+from random import choice, randint
 from kivy.clock import Clock
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.core.audio import SoundLoader
 
 Builder.load_file('settings.kv')
 Builder.load_file('race.kv')
 Builder.load_file('gameover.kv')
 Builder.load_file('widgets.kv')
 Builder.load_file('slug.kv')
-
+    
 class Game(ScreenManager):
     # the players
     player1 = Player()
@@ -70,7 +71,65 @@ class Game(ScreenManager):
     game_over_reason = StringProperty('')
     winner_text = StringProperty('')
     game_is_over = BooleanProperty(False)
+    sound_on = BooleanProperty(True)
+    def __init__(self,**kwargs):
+        super().__init__(**kwargs)
+        game_sounds= 'assets/sounds/Game/'
+        slug_sounds = 'assets/sound/Slugs Winning'
+        
+        self.background_music = SoundLoader.load(game_sounds +'Background Music.mp3')
+        self.slugs_running_sound = SoundLoader.load(game_sounds + 'Slugs Running.mp3')
+        self.gameover_sound = SoundLoader.load(game_sounds + 'Game Over.mp3')
+        self.go_sound = SoundLoader.load(game_sounds +'Go.mp3')
+        
+        #sounds assigned to particular slugs
+        self.speedster.win_sound = SoundLoader.load(slug_sounds +'Speedster Win.mp3')
+        self.trusty.win_sound = SoundLoader.load(slug_sounds +'Trusty Win.mp3')
+        self.iffy.win_sound = SoundLoader.load(slug_sounds +'Iffy Win.mp3')
+        self.slowpoke.win_sound = SoundLoader.load(slug_sounds +'Slowpoke Win.mp3')
+        #defualt sound volumes
+        self.slugs_running_sound.vilume = .2
+        self.go_sound.volume = .1
+        self.gameover_sound.volume =.1
+        #defining sounds into a list. for better performance for end user decrease load times. 
+        self.sounds = [self.background_music,
+                       self.slugs_running_sound,
+                       self.gameover_sound,
+                       self.go_sound,
+                       self.speedster.win_sound,
+                       self.trusty.win_sound,
+                       self.iffy.win_sound,
+                       self.slowpoke.win_sound,]
+        
+        self.background_music.loop = True
+        self.background_music.play()
+        #accidents
+        self.acc_broken_leg = BrokenLegAccident()
+        self.acc_overheat = OverheatAccident()
+        self.acc_heart_attack = HeartAttackAccident()
+        self.acc_grass = GrassAccident()
+        self.acc_asleep = AsleepAccident()
+        self.acc_blind = BlindAccident()
+        self.acc_puddle = PuddleAccident()
+        self.acc_electroshock = ElectroshockAccident()
+        self.acc_turning_back = TurningBackAccident()
+        self.acc_shooting_eyes = ShootingEyesAccident()
+        self.acc_rubberized = RubberizedAccident()
+        self.acc_Devoured = DevouredAccident()
 
+        self.accidents = [self.acc_broken_leg,
+                          self.acc_overheat,
+                          self.acc_heart_attack,
+                          self.acc_grass,
+                          self.acc_asleep,
+                          self.acc_blind,
+                          self.acc_puddle,
+                          self.acc_electroshock,
+                          self.acc_turning_back,
+                          self.acc_shooting_eyes,
+                          self.acc_rubberized,
+                          self.acc_devoured]
+        
     # callback methods
     def on_number_of_players(self, instance, value):
         if self.number_of_players == 1:
@@ -116,6 +175,11 @@ class Game(ScreenManager):
             self.gameover()
 
     def go(self, screen_manager):
+        # the race start sound is loud so i'll turn down the volume a bit( we set the defualt in main funct.)
+        self.go_sound.play()
+        #this will loop the sound repeatedly.
+        self.slugs_running_sound.loop = True
+        self.slugs_running_sound.play()
         for slug in self.slugs:
             anim = slug.run()
             anim.bind(on_progress=self.while_running)
@@ -123,11 +187,22 @@ class Game(ScreenManager):
             anim.start(slug)
 
         self.race_manager = screen_manager
+        self.accident_expected = (randint(0,3) ==0
+                                  if self.race_number >5
+                                  else False)
+        self.accident_expected = True
+        if self.accident_ecpected:
+            self.accident= choice(self.accidents)
+            self.accident.position = randint(290,500)
+            self.accident.slug = choice(self.slugs)
+            if self.accident.slug == self.trusty:
+                self.accident.slug = choice(self.slugs)
 
     def while_running(self, animation, slug, progression):
         if slug.right > self.finish_line:
             if not self.race_winner:
                 self.race_winner = slug
+                slug.win_sound.play()
 
                 for player in self.players:
                     player.update(self.race_winner)
@@ -137,6 +212,10 @@ class Game(ScreenManager):
 
                 self.remove_bankrupt_players()
                 self.gameover_check()
+        if self.accident_expected and slug == self.accident.slug:
+            if self.accident.position < slug.x < self.accisent.position + 10:
+                self.accident.happen()
+                self.expected_accident = False
 
     def finish_race(self, animation, slug):
         # This slug just finished the race.
@@ -150,6 +229,8 @@ class Game(ScreenManager):
             and self.slowpoke.finished):
             self.race_manager.current = 'resultsscreen'
             self.race_manager.transition.direction = 'left'
+            #stops playing the slug running sound when race is finished
+            self.slugs_running_sound.stop()
 
     def remove_bankrupt_players(self):
         self.players = [player for player in self.players if not player.bankrupt]
@@ -230,6 +311,13 @@ class Game(ScreenManager):
         self.gameover_event = Clock.schedule_once(self.gameover_screen, delay)
 
     def gameover_screen(self, dt):
+        #unloads background music from memory when game is over.
+        self.background_music.stop()
+        for sound in self.sounds:
+            if sound != self.gameover_sound:
+                sound.unload()
+        self.gameover_sound.play()
+        
         self.current = 'gameoverscreen'
         self.gameover_event.cancel()
 
@@ -245,10 +333,30 @@ class Game(ScreenManager):
 
         for slug in self.slugs:
             slug.reset()
-
+        self.reset_accidents()
     def reset_players(self):
         for player in self.potential_players:
             player.reset(gameover = True)
+    # now we will define the funciton that will handle the muting and unmuting of the sound.
+    def mute_unmute(self, instance, value):
+        #if toggle button is pressed...
+        if value =='down':
+            #1. set the sound_on property to false so that the right icon is displayed on the sound Button.
+            self.sound_on - False
+            #2. set all sounds' volume to 0, but first save their defualt volumes so we can use them later.
+            for sound in self.sounds:
+                sound.defualt_volume = sound.volume
+                sound.volume = 0 #this comma should be a period instead so when we called the function it crashed the app.
+        else:
+            self.sound_on = True
+            #restore sound volume
+            for sound in self.sounds:
+                sound.volume = sound.defualt_volume
+    def reset_accidents(self):
+        if self.accident:
+            self.accident.reset()
+            self.accident = None
+                
 
 class SlugraceApp(App):
     # General Settings
