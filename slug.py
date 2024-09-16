@@ -42,16 +42,16 @@ class Slug(RelativeLayout):
             self.wins += 1
         self.win_percent = round(self.wins / race_number * 100, 2)
 
-    def run(self):
+    def run(self, acceleration=1):
         self.finished = False
 
         move_base = randint(1, 10)
         if move_base < self.speeds[0]:
-            running_time = uniform(8, 10)  # slow
+            running_time = uniform(8, 10)/ acceleration  # slow
         elif move_base <= self.speeds[1]:
-            running_time = uniform(6, 8)  # medium
+            running_time = uniform(6, 8) / acceleration # medium
         else:
-            running_time = uniform(4, 6)  # fast
+            running_time = uniform(4, 6)/ acceleration  # fast
 
         # Cancel the eye animation.
         self.eye_animation.cancel(self)

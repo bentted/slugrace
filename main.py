@@ -197,6 +197,7 @@ class Game(ScreenManager):
             self.accident.slug = choice(self.slugs)
             if self.accident.slug == self.trusty:
                 self.accident.slug = choice(self.slugs)
+                self.accident.game = self
 
     def while_running(self, animation, slug, progression):
         if slug.right > self.finish_line:
