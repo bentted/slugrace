@@ -3,10 +3,16 @@
 #:import slug slug
 
 <Slug>:
+    canvas:
+        Scale:
+            x: root.x_scale
+
     pos_hint: {'x': self.start_position, 'center_y': root.y_position}
     size_hint: None, None
     size: 143, 30
     body: _body
+    left_eye: _left_eye
+    right_eye: _right_eye
 
     # the body image
     Image:
@@ -24,6 +30,7 @@
         canvas.after:
             PopMatrix
 
+        id: _left_eye
         source: 'atlas://assets/slugs/slugs/' + root.eye_image if root.eye_image else None
         pos_hint: {'x': .95, 'y': .45}
         size_hint: 0.25, 0.25
@@ -39,6 +46,7 @@
         canvas.after:
             PopMatrix
 
+        id: _right_eye
         source: 'atlas://assets/slugs/slugs/' + root.eye_image if root.eye_image else None
         pos_hint: {'x': .95, 'y': .3}
         size_hint: 0.25, 0.25

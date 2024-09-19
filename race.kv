@@ -53,6 +53,8 @@
     iffy: _iffy
     slowpoke: _slowpoke
 
+    track: _track
+
     BoxLayout:
         orientation: 'vertical'
         spacing: 10
@@ -190,6 +192,10 @@
                 RedButton:
                     text: 'Instructions'
                     pos_hint: {'right': 1}
+
+                    # Switch to Instructions screen.
+                    on_press: root.manager.current = 'instructionsscreen'
+
                 SoundButton:
                     image_source: 'assets/sound_on.png' if root.game.sound_on else 'assets/sound_off.png'
                     on_state: root.game.mute_unmute(*args)
@@ -207,6 +213,7 @@
 
             # Track Image
             RelativeLayout:
+                id: _track
                 size_hint: None, None
                 size: 1000, 200
                 pos_hint: {'center_y': .5}

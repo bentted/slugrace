@@ -22,12 +22,13 @@ class Slug(RelativeLayout):
     speeds = ListProperty([])
     rot_angle = NumericProperty(0)
     finished = BooleanProperty(True)
+    x_scale = NumericProperty(1)
+    shooting = BooleanProperty(False)
+    rubberized = BooleanProperty(False)
+    devoured = BooleanProperty(False)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-        # Let's change the duration range from
-        # (0.3, 1.5) to (0.6 to 1.6).
         self.rotate_eyes(30, uniform(.6, 1.6))
 
     def update(self, winning_slug, race_number):
@@ -42,28 +43,26 @@ class Slug(RelativeLayout):
             self.wins += 1
         self.win_percent = round(self.wins / race_number * 100, 2)
 
-    def run(self, acceleration=1):
+    def run(self, acceleration=1, backward=False):
         self.finished = False
 
         move_base = randint(1, 10)
         if move_base < self.speeds[0]:
-            running_time = uniform(8, 10)/ acceleration  # slow
+            self.running_time = uniform(8, 10) / acceleration  # slow
         elif move_base <= self.speeds[1]:
-            running_time = uniform(6, 8) / acceleration # medium
+            self.running_time = uniform(6, 8)  / acceleration # medium
         else:
-            running_time = uniform(4, 6)/ acceleration  # fast
+            self.running_time = uniform(4, 6) / acceleration # fast
 
-        # Cancel the eye animation.
         self.eye_animation.cancel(self)
+        self.rotate_eyes(30, self.running_time/6)
 
-        # Call the rotate_eyes method again so that
-        # a new eye animation is created with the same
-        # maximum angle, but with duration depending
-        # on the running time.
-        self.rotate_eyes(30, running_time/6)
+        if not backward:
+            self.run_animation = Animation(pos_hint={'x': self.finish_position},
+                                           d=self.running_time)
+        else:
+            self.run_animation = Animation(pos_hint={'x': -.1}, d=1)
 
-        self.run_animation = Animation(pos_hint={'x': self.finish_position},
-                                       d=running_time)
         return self.run_animation
 
     def reset(self):
