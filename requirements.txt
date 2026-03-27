@@ -1,0 +1,17 @@
+# Core requirements for SlugRace mobile app
+kivy>=2.1.0
+kivymd>=1.0.2
+
+# Mobile platform support
+buildozer>=1.4.0
+python-for-android>=2022.3.13
+
+# Audio support
+pygame>=2.1.0
+
+# Mobile-specific features
+plyer>=2.0.0
+
+# Optional dependencies for enhanced mobile experience
+# pygments>=2.10.0 (for better error reporting)
+# certifi>=2021.10.8 (for secure connections)

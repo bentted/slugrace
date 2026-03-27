@@ -1,12 +1,19 @@
 # File name: main.py
 
 from kivy.config import Config
-Config.set('graphics', 'width', '1200')
-Config.set('graphics', 'height', '675')
-Config.set('graphics', 'resizable', '0')
+from kivy.utils import platform
 
-# Let's get rid of the window border.
-Config.set('graphics', 'borderless', '1')
+# Mobile-responsive configuration
+if platform == 'android' or platform == 'ios':
+    # Mobile platforms - use fullscreen
+    Config.set('graphics', 'fullscreen', '1')
+    Config.set('graphics', 'show_cursor', '0')
+else:
+    # Desktop platforms - keep original settings
+    Config.set('graphics', 'width', '1200')
+    Config.set('graphics', 'height', '675')
+    Config.set('graphics', 'resizable', '0')
+    Config.set('graphics', 'borderless', '1')
 
 import kivy
 kivy.require('1.11.1')
@@ -25,7 +32,25 @@ from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.core.audio import SoundLoader
+from kivy.core.window import Window
+from kivy.utils import platform
 from accident import *
+
+# Mobile-specific imports
+if platform == 'android':
+    from android.permissions import request_permissions, Permission
+    from jnius import autoclass
+    try:
+        from plyer import vibrator
+    except ImportError:
+        vibrator = None
+elif platform == 'ios':
+    try:
+        from plyer import vibrator
+    except ImportError:
+        vibrator = None
+else:
+    vibrator = None
 
 Builder.load_file('settings.kv')
 Builder.load_file('race.kv')
@@ -33,6 +58,7 @@ Builder.load_file('gameover.kv')
 Builder.load_file('widgets.kv')
 Builder.load_file('slug.kv')
 Builder.load_file('instructions.kv')
+Builder.load_file('mobile_responsive.kv')
 
 # We have to load the Splash screen.
 Builder.load_file('splash.kv')
@@ -59,7 +85,11 @@ class Game(ScreenManager):
     races_to_go = NumericProperty(0)
     race_number = NumericProperty(1)
     race_winner = ObjectProperty(None, allownone=True)
-    finish_line = 850
+    finish_line = NumericProperty(850)  # Will be set dynamically for mobile
+
+    # Mobile properties
+    is_mobile = BooleanProperty(platform in ['android', 'ios'])
+    vibration_enabled = BooleanProperty(True)
 
     # time
     time_set_delta = timedelta()  # duration
@@ -82,6 +112,16 @@ class Game(ScreenManager):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        # Mobile-specific setup
+        if self.is_mobile:
+            # Set responsive finish line based on screen width
+            Window.bind(on_resize=self._update_finish_line)
+            self._update_finish_line(Window, Window.width, Window.height)
+            
+            # Request Android permissions
+            if platform == 'android':
+                request_permissions([Permission.VIBRATE, Permission.WAKE_LOCK])
 
         game_sounds = 'assets/sounds/Game/'
         slug_sounds = 'assets/Sounds/Slugs Winning/'
@@ -192,7 +232,10 @@ class Game(ScreenManager):
             self.gameover()
 
     def go(self, screen_manager):
+        # Race start - play sound and add mobile haptic feedback
         self.go_sound.play()
+        self.mobile_vibrate(0.2)  # Short vibration for race start
+        
         self.slugs_running_sound.loop = True
         self.slugs_running_sound.play()
 
@@ -250,6 +293,9 @@ class Game(ScreenManager):
             and self.trusty.finished
             and self.iffy.finished
             and self.slowpoke.finished):
+            # All slugs finished - vibrate for race completion
+            self.mobile_vibrate(0.3)  # Longer vibration for race finish
+            
             self.race_manager.current = 'resultsscreen'
             self.race_manager.transition.direction = 'left'
             self.slugs_running_sound.stop()
@@ -265,6 +311,9 @@ class Game(ScreenManager):
             self.gameover()
 
     def gameover(self, manual=False):
+        # Game over - provide haptic feedback
+        self.mobile_vibrate(0.5)  # Strong vibration for game over
+        
         self.winners = []
 
         # all players go bankrupt
@@ -377,6 +426,23 @@ class Game(ScreenManager):
         if self.accident:
             self.accident.reset()
             self.accident = None
+
+    def _update_finish_line(self, instance, width, height):
+        """Update finish line position based on screen size for mobile devices"""
+        if self.is_mobile:
+            # Set finish line to 80% of screen width to ensure it's always reachable
+            self.finish_line = int(width * 0.8)
+        else:
+            # Keep original desktop value
+            self.finish_line = 850
+
+    def mobile_vibrate(self, duration=0.1):
+        """Trigger haptic feedback on mobile devices"""
+        if self.is_mobile and self.vibration_enabled and vibrator:
+            try:
+                vibrator.vibrate(duration)
+            except Exception:
+                pass  # Silently fail if vibration isn't available
 
 class SlugraceApp(App):
     # General Settings

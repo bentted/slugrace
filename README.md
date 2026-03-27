@@ -2,19 +2,24 @@
 
 ---
 
-# SlugRace 🐌
+# SlugRace 🐌📱
 
 **SlugRace** is an exciting and fun Python-based game built using the [Kivy](https://kivy.org) framework. It combines Python and KvLang to deliver an engaging racing experience where players bet on slugs and watch them race to victory!
+
+**🆕 Now Available on Mobile!** SlugRace has been converted to run on Android and iOS devices with full functionality and mobile-optimized UI.
 
 ---
 
 ## Features
 
-- **Interactive Betting System**: Place bets on your favorite slug and see if they win the race.
-- **Dynamic Gameplay**: Real-time slug racing simulations with randomized results.
-- **User-Friendly Interface**: Built using Kivy for a smooth and responsive user experience.
-- **Customizable Settings**: Tailor the game to your preferences with adjustable configurations.
-- **Modular Design**: Organized codebase with reusable components for easy development and maintenance.
+- **📱 Cross-Platform**: Available on Desktop, Android, and iOS
+- **🎮 Interactive Betting System**: Place bets on your favorite slug and see if they win the race
+- **🏁 Dynamic Gameplay**: Real-time slug racing simulations with randomized results
+- **📲 Mobile-Optimized**: Touch-friendly interface with responsive design
+- **🎵 Rich Audio Experience**: Background music and sound effects
+- **📳 Mobile Features**: Haptic feedback (vibration) support
+- **⚙️ Customizable Settings**: Tailor the game to your preferences
+- **🔧 Modular Design**: Organized codebase with reusable components
 
 ---
 
@@ -36,6 +41,8 @@
 
 ## How to Run
 
+### Desktop Version
+
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/bentted/slugrace.git
@@ -43,26 +50,54 @@
    ```
 
 2. **Install Dependencies**:
-   Make sure Python is installed. Install the required dependencies using:
    ```bash
-   pip install kivy
+   pip install -r requirements.txt
    ```
 
 3. **Run the Game**:
-   Execute the following command to start the game:
    ```bash
    python main.py
    ```
 
-4. **Enjoy the Game**:
-   Follow the on-screen instructions to place bets, start races, and have fun!
+### Mobile Versions
+
+#### 📱 Quick Mobile Setup:
+```bash
+# Automated setup for mobile development
+chmod +x setup_mobile.sh
+./setup_mobile.sh
+```
+
+#### 🤖 Android Build:
+```bash
+# Linux/WSL
+./build_android.sh
+
+# Windows PowerShell  
+.\build_android.ps1
+```
+
+#### 🍎 iOS Build (macOS only):
+```bash
+./build_ios.sh
+```
+
+**📚 For detailed mobile build instructions, see [MOBILE_BUILD.md](MOBILE_BUILD.md)**
 
 ---
 
 ## Technologies Used
 
-- **Python (55.8%)**: The primary programming language used for game logic and backend systems.
-- **KvLang (44.2%)**: Used to create responsive and visually appealing user interfaces.
+- **Python (55.8%)**: The primary programming language used for game logic and backend systems
+- **KvLang (44.2%)**: Used to create responsive and visually appealing user interfaces  
+- **Kivy Framework**: Cross-platform app development framework
+- **Buildozer**: Android app packaging and build tool
+- **Kivy-iOS**: iOS app development and packaging tool
+
+### Supported Platforms:
+- 🖥️ **Desktop**: Windows, macOS, Linux
+- 🤖 **Android**: Version 5.0+ (API 21+)
+- 🍎 **iOS**: Version 11.0+
 
 ---
 

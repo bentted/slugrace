@@ -1,0 +1,55 @@
+#:kivy 1.11.1
+# File name: mobile_responsive.kv
+# Mobile-specific responsive UI adjustments
+
+#:import platform kivy.utils.platform
+
+<ResponsiveButton@Button>:
+    # Larger touch targets for mobile
+    size_hint_y: None
+    height: '60dp' if platform in ['android', 'ios'] else '40dp'
+    font_size: '18sp' if platform in ['android', 'ios'] else '14sp'
+
+<ResponsiveLabel@Label>:
+    # Better readability on mobile
+    font_size: '16sp' if platform in ['android', 'ios'] else '12sp'
+    text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+
+<MobileGame@Game>:
+    # Mobile-specific game adjustments
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1 if platform in ['android', 'ios'] else 0
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+# Override default button styles for mobile
+<Button>:
+    font_size: '18sp' if platform in ['android', 'ios'] else self.font_size
+    size_hint_y: None
+    height: '60dp' if platform in ['android', 'ios'] else '48dp' if self.size_hint_y is None else self.height
+
+# Make labels more readable on mobile
+<Label>:
+    font_size: '16sp' if platform in ['android', 'ios'] and self.font_size == '12sp' else self.font_size
+
+# Responsive spacing for layouts
+<BoxLayout>:
+    spacing: '10dp' if platform in ['android', 'ios'] else '5dp'
+
+<GridLayout>:
+    spacing: '10dp' if platform in ['android', 'ios'] else '5dp'
+
+# Mobile-friendly popups
+<Popup>:
+    size_hint: (0.9, 0.8) if platform in ['android', 'ios'] else (None, None)
+    size: (min(400, root.width * 0.9), min(300, root.height * 0.8)) if platform not in ['android', 'ios'] else (100, 100)
+
+# Touch-friendly input fields
+<TextInput>:
+    font_size: '18sp' if platform in ['android', 'ios'] else self.font_size
+    size_hint_y: None
+    height: '60dp' if platform in ['android', 'ios'] else '32dp'
